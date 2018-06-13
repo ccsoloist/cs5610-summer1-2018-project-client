@@ -8,7 +8,7 @@ import * as actions from '../actions'
 import '../styles/index.css'
 
 
-const LoginFormComponent = ({login}) => {
+const LoginFormContainer = ({login}) => {
   let select;
   let input_un;
   let input_pw;
@@ -77,7 +77,7 @@ const dispatcherToPropsMapper = dispatch => ({
 const LoginFormConnected = connect(
   stateToPropsMapper,
   dispatcherToPropsMapper)
-(LoginFormComponent);
+(LoginFormContainer);
 
 const store = createStore(reducer);
 

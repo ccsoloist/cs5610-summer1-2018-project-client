@@ -6,7 +6,7 @@ import {reducer} from '../reducers'
 import * as actions from '../actions'
 import '../styles/index.css'
 
-const RegisterFormComponent = ({userType, typeChanged}) => {
+const RegisterFormContainer = ({userType, typeChanged}) => {
   let select;
   return (
     <div className="register-form-container">
@@ -82,13 +82,6 @@ const RegisterFormComponent = ({userType, typeChanged}) => {
               </div>
             </div>
 
-            <div className="form-group"
-                 hidden={userType !== constants.CUSTOMER}>
-              <label>Address</label>
-              <input className="form-control"
-                     placeholder="Enter address"/>
-            </div>
-
             <div className="form-group">
               <label>Email</label>
               <input className="form-control"
@@ -99,6 +92,13 @@ const RegisterFormComponent = ({userType, typeChanged}) => {
               <label>Phone</label>
               <input className="form-control"
                      placeholder="Enter phone"/>
+            </div>
+
+            <div className="form-group"
+                 hidden={userType !== constants.CUSTOMER}>
+              <label>Address</label>
+              <input className="form-control"
+                     placeholder="Enter address"/>
             </div>
           </div>
         </div>
@@ -133,7 +133,7 @@ const dispatcherToPropsMapper = dispatch => ({
 const RegisterFormConnected = connect(
   stateToPropsMapper,
   dispatcherToPropsMapper)
-(RegisterFormComponent);
+(RegisterFormContainer);
 
 const store = createStore(reducer);
 

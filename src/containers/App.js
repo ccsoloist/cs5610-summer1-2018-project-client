@@ -9,10 +9,10 @@ export default class App extends Component {
   render = () => (
     <Router>
       <Switch className="container-fluid">
+        {/*<Route path="/home" component={RestaurantGrid}/>*/}
         <Route path="/login" component={LoginForm}/>
         <Route path="/register" component={RegisterForm}/>
-        {/*<Route path="/home" component={RestaurantGrid}/>*/}
-        {/*<Route path="/profile" component={ProfileEditor}/>*/}
+        <Route path="/profile" component={ProfileEditor}/>
       </Switch>
     </Router>
   )
