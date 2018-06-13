@@ -7,3 +7,10 @@ export const LOGIN_URL = SERVER + '/login/TYPE';
 export const LOGOUT_URL = SERVER + '/logout';
 export const PROFILE_URL = SERVER + '/profile';
 export const ALL_ORDERS_URL = SERVER + '/orders/TYPE/UID';
+
+export const USER_TYPE_CHANGED = 'USER_TYPE_CHANGED';
+export const LOGIN = 'LOGIN';
+
+export const CUSTOMER = 'Customer';
+export const RESTAURATEUR = 'Restaurateur';
+export const DELIVERER = 'Deliverer';

@@ -6,7 +6,7 @@ import '../node_modules/font-awesome/css/font-awesome.min.css';
 import App from "./containers/App";
 
 ReactDOM.render(
-    <App/>,
-    document.getElementById('root')
+  <App/>,
+  document.getElementById('root')
 );
 
