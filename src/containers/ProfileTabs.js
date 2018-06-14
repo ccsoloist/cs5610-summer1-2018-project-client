@@ -14,15 +14,13 @@ const ProfileTabsContainer = ({userId, userType}) => {
       <div className="profile-tabs">
         <div className="row">
           <li className="list-group-item form-control">
-            {/*<Link to={`/profile/${userType}/${userId}/account`}>*/}
-            <Link to={`/profile/account`}>
+            <Link to={`/profile/${userType}/${userId}/account`}>
               My Account</Link>
           </li>
         </div>
         <div className="row">
           <li className="list-group-item form-control">
-            {/*<Link to={`/profile/${userType}/${userId}/orders`}>*/}
-            <Link to={`/profile/orders`}>
+            <Link to={`/profile/${userType}/${userId}/orders`}>
               Recent Orders</Link>
           </li>
         </div>
@@ -38,7 +36,12 @@ const ProfileTabsContainer = ({userId, userType}) => {
   )
 };
 
-const stateToPropsMapper = state => (state);
+const stateToPropsMapper = (state, ownProps) => {
+  return {
+    userType: ownProps.userType,
+    id: ownProps.id
+  }
+};
 
 const dispatcherToPropsMapper = dispatch => ({});
 
@@ -47,12 +50,13 @@ const ProfileTabsConnected = connect(
   dispatcherToPropsMapper)
 (ProfileTabsContainer);
 
-const store = createStore(reducer);
+export default ProfileTabsConnected;
+// const store = createStore(reducer);
 
-const ProfileTabs = state => (
-  <Provider store={store}>
-    <ProfileTabsConnected/>
-  </Provider>
-);
+// const ProfileTabs = state => (
+//   <Provider store={store}>
+//     <ProfileTabsConnected/>
+//   </Provider>
+// );
 
-export default ProfileTabs;
+// export default ProfileTabs;

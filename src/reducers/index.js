@@ -7,6 +7,16 @@ export const reducer = (state, action) => {
         userType: action.userType
       };
 
+    case constants.LOGIN:
+      console.log(state);
+      console.log(action);
+      return {
+        userType: action.userType,
+        username: action.username,
+        password: action.password,
+        userId: action.userId
+      };
+
     default: return state;
   }
 };

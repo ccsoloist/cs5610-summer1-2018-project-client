@@ -12,7 +12,7 @@ export default class App extends Component {
         {/*<Route path="/home" component={RestaurantGrid}/>*/}
         <Route path="/login" component={LoginForm}/>
         <Route path="/register" component={RegisterForm}/>
-        <Route path="/profile" component={ProfileEditor}/>
+        <Route path="/profile/:userType/:userId" component={ProfileEditor}/>
       </Switch>
     </Router>
   )

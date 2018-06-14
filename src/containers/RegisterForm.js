@@ -5,9 +5,13 @@ import {createStore} from 'redux'
 import {reducer} from '../reducers'
 import * as actions from '../actions'
 import '../styles/index.css'
+import '../styles/validation.scss'
 
-const RegisterFormContainer = ({userType, typeChanged}) => {
+const RegisterFormContainer = ({userType, typeChanged, register}) => {
   let select;
+  let input_un, input_pw, input_cf, input_fn;
+  let input_ln, input_rn, input_em, input_ph, input_ad;
+
   return (
     <div className="register-form-container">
       <form className="register-form">
@@ -15,36 +19,37 @@ const RegisterFormContainer = ({userType, typeChanged}) => {
           <div className="col">
             <div className="form-group">
               <label>User Type</label>
-              <select
-                className="form-control"
-                onChange={() => typeChanged(select.value)}
-                value={userType}
-                ref={node => select = node}>
-                <option value={constants.CUSTOMER}>{constants.CUSTOMER}</option>
-                <option value={constants.RESTAURATEUR}>
-                  {constants.RESTAURATEUR}</option>
-                <option value={constants.DELIVERER}>{constants.DELIVERER}</option>
+              <select className="form-control"
+                      value={userType}
+                      onChange={() => typeChanged(select.value)}
+                      ref={node => select = node}>
+                <option value={constants.CUSTOMER}>Customer</option>
+                <option value={constants.RESTAURATEUR}>Restaurateur</option>
+                <option value={constants.DELIVERER}>Deliverer</option>
               </select>
             </div>
 
             <div className="form-group">
               <label>Username</label>
               <input className="form-control"
-                     placeholder="Username"/>
+                     placeholder="Username"
+                     ref={node => input_un = node} required/>
             </div>
 
             <div className="form-group">
               <label>Password</label>
               <input type="password"
                      className="form-control"
-                     placeholder="Password"/>
+                     placeholder="Password"
+                     ref={node => input_pw = node} required/>
             </div>
 
             <div className="form-group">
               <label>Confirm</label>
               <input type="password"
                      className="form-control"
-                     placeholder="Confirm Password"/>
+                     placeholder="Confirm Password"
+                     ref={node => input_cf = node} required/>
             </div>
           </div>
           <div className="col">
@@ -55,7 +60,8 @@ const RegisterFormContainer = ({userType, typeChanged}) => {
                 <div className="col-8">
                   <input type="text"
                          className="form-control"
-                         placeholder="Restaurant Name"/>
+                         placeholder="Restaurant Name"
+                         ref={node => input_rn = node} required/>
                 </div>
                 <div className="col-4">
                   <button type="button"
@@ -72,33 +78,38 @@ const RegisterFormContainer = ({userType, typeChanged}) => {
                 <label>First Name</label>
                 <input type="text"
                        className="form-control"
-                       placeholder="First name"/>
+                       placeholder="First name"
+                       ref={node => input_fn = node} required/>
               </div>
               <div className="col">
                 <label>Last Name</label>
                 <input type="text"
                        className="form-control"
-                       placeholder="Last name"/>
+                       placeholder="Last name"
+                       ref={node => input_ln = node} required/>
               </div>
             </div>
 
             <div className="form-group">
               <label>Email</label>
               <input className="form-control"
-                     placeholder="Enter email"/>
+                     placeholder="Enter email"
+                     ref={node => input_em = node} required/>
             </div>
 
             <div className="form-group">
               <label>Phone</label>
               <input className="form-control"
-                     placeholder="Enter phone"/>
+                     placeholder="Enter phone"
+                     ref={node => input_ph = node} required/>
             </div>
 
             <div className="form-group"
                  hidden={userType !== constants.CUSTOMER}>
               <label>Address</label>
               <input className="form-control"
-                     placeholder="Enter address"/>
+                     placeholder="Enter address"
+                     ref={node => input_ad = node} required/>
             </div>
           </div>
         </div>
@@ -106,7 +117,11 @@ const RegisterFormContainer = ({userType, typeChanged}) => {
           <div className="col-12">
             <button type="button"
                     className="form-control btn btn-primary"
-            >Register
+                    onClick={() => register(userType, input_un.value,
+                      input_pw.value, input_cf.value, input_fn.value,
+                      input_ln.value, input_rn.value, input_em.value,
+                      input_ph.value, input_ad.value)}>
+              Register
             </button>
           </div>
         </div>
@@ -127,7 +142,12 @@ const stateToPropsMapper = (state, ownProps) => {
 };
 
 const dispatcherToPropsMapper = dispatch => ({
-  typeChanged: (userType) => actions.typeChanged(dispatch, userType)
+  typeChanged: (userType) =>
+    actions.typeChanged(dispatch, userType),
+  register: (userType, username, password, confirm, firstName,
+             lastName, restaurantName, email, phone, address) =>
+    actions.Register(dispatch, userType, username, password, confirm,
+      firstName, lastName, restaurantName, email, phone, address)
 });
 
 const RegisterFormConnected = connect(

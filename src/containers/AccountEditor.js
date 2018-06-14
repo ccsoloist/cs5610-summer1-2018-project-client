@@ -79,14 +79,14 @@ const AccountEditorContainer = ({userType}) => {
   )
 };
 
-const stateToPropsMapper = state => (state);
+// const stateToPropsMapper = state => (state);
 
 const dispatcherToPropsMapper = dispatch => ({});
 
 const AccountEditorConnected = connect(
-  stateToPropsMapper,
-  dispatcherToPropsMapper)
-(AccountEditorContainer);
+  // stateToPropsMapper,
+  dispatcherToPropsMapper
+)(AccountEditorContainer);
 
 const store = createStore(reducer);
 

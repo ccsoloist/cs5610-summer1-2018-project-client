@@ -22,9 +22,9 @@ const LoginFormContainer = ({login}) => {
               className="form-control"
               // value={userType}
               ref={node => select = node}>
-              <option value={constants.CUSTOMER}>{constants.CUSTOMER}</option>
-              <option value={constants.RESTAURATEUR}>{constants.RESTAURATEUR}</option>
-              <option value={constants.DELIVERER}>{constants.DELIVERER}</option>
+              <option value={constants.CUSTOMER}>Customer</option>
+              <option value={constants.RESTAURATEUR}>Restaurateur</option>
+              <option value={constants.DELIVERER}>Deliverer</option>
             </select>
           </div>
         </div>
@@ -51,9 +51,9 @@ const LoginFormContainer = ({login}) => {
         <div className="form-group row">
           <div className="col-6">
             <button type="button"
-                    onClick={()=>login(select.value, input_un.value, input_pw.value)}
                     className="form-control btn btn-primary"
-            >Log in
+                    onClick={() => login(select.value, input_un.value, input_pw.value)}>
+              Log in
             </button>
           </div>
           <div className="col-6">
@@ -67,7 +67,7 @@ const LoginFormContainer = ({login}) => {
   )
 };
 
-const stateToPropsMapper = state => (state);
+const stateToPropsMapper = state => ({});
 
 const dispatcherToPropsMapper = dispatch => ({
   login: (userType, username, password) =>

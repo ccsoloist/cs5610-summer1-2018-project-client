@@ -11,6 +11,6 @@ export const ALL_ORDERS_URL = SERVER + '/orders/TYPE/UID';
 export const USER_TYPE_CHANGED = 'USER_TYPE_CHANGED';
 export const LOGIN = 'LOGIN';
 
-export const CUSTOMER = 'Customer';
-export const RESTAURATEUR = 'Restaurateur';
-export const DELIVERER = 'Deliverer';
+export const CUSTOMER = 'customer';
+export const RESTAURATEUR = 'restaurateur';
+export const DELIVERER = 'deliverer';

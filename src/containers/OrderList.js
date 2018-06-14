@@ -13,19 +13,32 @@ const OrderListContainer = ({}) => {
     <div className="order-list-container">
       <div className="order-list">
         <h1>Order List</h1>
-        <OrderWidget/>
+        <table className="table">
+          <thead>
+          <tr>
+            <th></th>
+            <th>Restaurant name</th>
+            <th>$</th>
+            <th>Finished</th>
+          </tr>
+          </thead>
+          <tbody>
+            <OrderWidget/>
+          </tbody>
+        </table>
+
       </div>
     </div>
 
   )
 };
 
-const stateToPropsMapper = state => (state);
+// const stateToPropsMapper = state => (state);
 
 const dispatcherToPropsMapper = dispatch => ({});
 
 const OrderListConnected = connect(
-  stateToPropsMapper,
+  // stateToPropsMapper,
   dispatcherToPropsMapper)
 (OrderListContainer);
 

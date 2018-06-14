@@ -8,19 +8,30 @@ import * as actions from '../actions'
 import '../styles/index.css'
 
 const OrderWidgetComponent = ({}) => {
-  return(
-    <h1>Dummy Order</h1>
+  return (
+    <tr>
+      <td>
+        <i className="fa fa-plus"/>
+      </td>
+      <td>
+        <p>name</p>
+      </td>
+      <td>
+        <p>100.0</p>
+      </td>
+      <td>
+        <p>yes</p>
+      </td>
+    </tr>
   )
 };
 
-const stateToPropsMapper = state => (state);
+// const stateToPropsMapper = state => (state);
 
-const dispatcherToPropsMapper = dispatch => ({
-
-});
+const dispatcherToPropsMapper = dispatch => ({});
 
 const OrderWidgetConnected = connect(
-  stateToPropsMapper,
+  // stateToPropsMapper,
   dispatcherToPropsMapper)
 (OrderWidgetComponent);
 
