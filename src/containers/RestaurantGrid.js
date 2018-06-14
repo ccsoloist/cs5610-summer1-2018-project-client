@@ -4,6 +4,7 @@ import * as constants from "../constants";
 import RestaurantServiceClient from "../services/RestaurantServiceClient";
 import YelpServiceClient from "../services/YelpServiceClient";
 
+
 export default class RestaurantGrid
   extends React.Component {
 

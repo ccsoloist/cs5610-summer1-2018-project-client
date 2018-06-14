@@ -74,7 +74,6 @@ export default class RestaurantViewer extends React.Component {
   componentDidMount() {
     let yelpId = this.props.match.params.yelpId;
     this.setState({yelpId: yelpId});
-
     this.restaurantService.findRestaurantByYelpId(yelpId)
       .then(restaurant => this.setState({restaurant: restaurant}));
   }
