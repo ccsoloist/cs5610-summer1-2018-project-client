@@ -1,0 +1,104 @@
+html,
+body {
+    height: 100%;
+    /*background-color: #333;*/
+    /*background-color: aliceblue;*/
+}
+
+body {
+    /*color: #fff;*/
+    color: black;
+    text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+    /*box-shadow: inset 0 0 5rem rgba(0, 0, 255, .4);*/
+}
+
+/*input:required {*/
+/*border-color: #dc3545;*/
+/*}*/
+
+
+
+.wbdv-table-head {
+    background: dodgerblue;
+    color: #fff;
+    text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+    box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+}
+
+.login-form {
+    /*border: 1px solid blu;*/
+    background-color: steelblue;
+    box-shadow: inset 0 0 5px rgba(34, 126, 236, .8);
+    border-radius: 12px;
+    padding: 5% 5%;
+}
+
+.login-form-container {
+
+    padding: 10% 30%;
+}
+
+.register-form {
+    /*border: 1px solid blu;*/
+    background-color: steelblue;
+    box-shadow: inset 0 0 5px rgba(34, 126, 236, .8);
+    border-radius: 12px;
+    padding: 5% 5%;
+}
+
+.register-form-container {
+    padding: 6% 10%;
+}
+
+.profile-editor {
+    background-color: steelblue;
+    box-shadow: inset 0 0 5px rgba(34, 126, 236, .8);
+    border-radius: 12px;
+    padding: 5% 5%;
+}
+
+.profile-editor-container {
+    padding: 5% 5%;
+}
+
+.profile-tabs {
+    /*box-shadow: inset 0 0 5px rgba(34, 126, 236, .8);*/
+    /*border-radius: 12px;*/
+    /*padding: 5% 5%;*/
+}
+
+.profile-tabs-container {
+    padding: 6% 10%;
+}
+
+.account-editor {
+    background-color: lightskyblue;
+    box-shadow: inset 0 0 5px rgba(34, 126, 236, .8);
+    border-radius: 12px;
+    padding: 5% 10%;
+}
+
+.account-editor-container {
+    /*padding: 6% 10%;*/
+}
+
+.order-list {
+    background-color: lightskyblue;
+    box-shadow: inset 0 0 5px rgba(34, 126, 236, .8);
+    border-radius: 12px;
+    padding: 5% 10%;
+}
+
+.order-list-container {
+    /*padding: 6% 10%;*/
+}
+
+.order-widget {
+    box-shadow: inset 0 0 5px rgba(34, 126, 236, .8);
+    border-radius: 12px;
+    padding: 5% 10%;
+}
+
+.order-widget-container {
+    padding: 6% 10%;
+}

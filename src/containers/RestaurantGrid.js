@@ -1,5 +1,4 @@
 import React from 'react';
-import YelpApi from 'v3-yelp-api';
 import {Link} from "react-router-dom";
 import SearchBar from "./SearchBar";
 
@@ -89,9 +88,9 @@ export default class RestaurantGrid
           </button>
 
           <div className="col-3 text-center">
-            <a href="#">Signin</a>
+            <Link to="/login">Login</Link>
             &nbsp;&nbsp;/&nbsp;&nbsp;
-            <a href="#">Register</a>
+            <Link to="/register">Register</Link>
           </div>
         </div>
 
