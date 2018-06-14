@@ -68,5 +68,27 @@ export const Register =
       headers: {
         'content-type': 'application/json'
       }
+    }).then((response) => {
+      if (response.status === 409) {
+        alert("Username already exists!");
+        return false;
+      } else {
+        alert("Successfully registered!");
+        return response.json();
+      }
+    }).then(user => {
+      if (user === false) {
+        alert("User not found, please register!");
+        //redirecting
+      } else {
+        // dispatch({
+        //   type: constants.LOGIN,
+        //   userId: user.id,
+        //   userType: userType,
+        //   username: username,
+        //   password: password
+        // });
+        window.location.replace("/profile/"+userType+"/"+user.id);
+      }
     });
   };
