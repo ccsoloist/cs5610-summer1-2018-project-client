@@ -19,7 +19,8 @@ class ProfileEditorContainer extends Component {
     super(props);
     this.state = {
       userType:'',
-      userId:''
+      userId:'',
+      user:{}
     };
   }
 
@@ -31,6 +32,9 @@ class ProfileEditorContainer extends Component {
     let userType = address[0];
     let userId = address[1];
     this.setState({userType: userType, userId: userId});
+    fetch('http://localhost:8080/api/profile/'+userType+'/'+userId+'/account')
+      .then(response=>(response.json()))
+      .then(user=>{this.setState({user: user})});
   }
 
   render() {
@@ -43,7 +47,9 @@ class ProfileEditorContainer extends Component {
             </div>
             <div className="col-8">
               <Switch className="container-fluid">
-                <Route path="/profile/:userType/:userId/account" component={AccountEditor}/>
+                <Route path="/profile/:userType/:userId/account" >
+                  <AccountEditor user={this.state.user} userType={this.state.userType} userId={this.state.userId}/>
+                </Route>
                 <Route path="/profile/:userType/:userId/orders" component={OrderList}/>
                 {/*<Route path="/profile/dishes" component={DishList}/>*/}
               </Switch>
