@@ -1,0 +1,15 @@
+.form-control.active {
+  box-shadow: 0 0 5px 1px green;
+  &.invalid {
+    box-shadow: 0 0 5px 1px red;
+  }
+}
+
+.errors {
+  color: red;
+  font-size: 12px;
+  margin: 5px;
+  > span {
+    display: block;
+  }
+}
