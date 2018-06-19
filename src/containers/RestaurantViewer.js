@@ -89,9 +89,9 @@ export default class RestaurantViewer extends React.Component {
 
   render() {
     return (
-      <div className='container-fluid' style={{margin: 20}}>
+      <div className="container-fluid">
 
-        <div className="row container-fluid" style={{marginBottom: 30}}>
+        <div className="row restaurant-search-bar">
           <h2 className="col-2">Hungya</h2>
           <input className="form-control col-3"
                  placeholder="Restaurant, Category..."

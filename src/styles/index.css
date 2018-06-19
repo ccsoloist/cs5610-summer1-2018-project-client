@@ -120,3 +120,20 @@ body {
         padding: 1rem 2rem;
     }
 }
+
+.restaurant-search-bar {
+    padding: 1rem 1rem;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 30px;
+    background-color: #e9ecef;
+    border-radius: 0.3rem;
+    background-size: cover;
+    font-size: 140%;
+}
+
+@media (min-width: 576px) {
+    .restaurant-search-bar {
+        padding: 1rem 2rem;
+    }
+}

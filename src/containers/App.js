@@ -12,7 +12,7 @@ export default class App extends Component {
     <Router>
       <Switch className="container-fluid">
         <Route exact path="/" component={Home}/>
-        <Route path="/restaurant/:yelpId" component={RestaurantViewer}></Route>
+        <Route path="/restaurant/:yelpId" component={RestaurantViewer}/>
         <Route path="/login" component={LoginForm}/>
         <Route path="/register" component={RegisterForm}/>
         <Route path="/profile/:userType/:userId" component={ProfileEditor}/>
