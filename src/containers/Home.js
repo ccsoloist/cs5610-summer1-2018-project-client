@@ -91,7 +91,7 @@ export default class Home
             return (
               <div className="col-3" key={restaurant.yelpId}>
                 <div className="card" style={{marginBottom: 10}}>
-                  <img className="card-img-top" style={{width: 250, height: 200}}
+                  <img className="card-img-top" style={{width: 255, height: 200}}
                        src={restaurant.image_url} alt="Restaurant Image"/>
                   <div className="card-body">
                     <h5 className="card-title">{restaurant.name}</h5>

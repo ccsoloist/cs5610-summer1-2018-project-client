@@ -35,6 +35,7 @@ export default class SearchBar
                placeholder="Restaurant, Category..."
                type="text"
                onChange={this.termChanged}/>
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
         <input className="form-control col-3"
                placeholder="Location"
                type="text"
