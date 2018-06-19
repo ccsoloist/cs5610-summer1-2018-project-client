@@ -31,7 +31,7 @@ const RegisterFormContainer = ({userType, typeChanged, register}) => {
 
   return (
     <div>
-
+    <span> </span>
     <Form className="register-form-container" model="user" onSubmit={this.handleSubmit}>
       <div className="register-form">
         <div className=" form-group row">
