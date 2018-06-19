@@ -12,6 +12,7 @@ import AccountEditor from './AccountEditor'
 import OrderList from './OrderList'
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
+import UserServiceClient from "../services/UserServiceClient";
 
 
 class ProfileEditorContainer extends Component {
@@ -22,6 +23,8 @@ class ProfileEditorContainer extends Component {
       userId:'',
       user:{}
     };
+
+    this.userService = UserServiceClient.instance();
   }
 
   componentDidMount() {
@@ -33,9 +36,12 @@ class ProfileEditorContainer extends Component {
     let userId = address[1];
     this.setState({userType: userType, userId: userId});
 
-    fetch('http://localhost:8080/api/profile/'+userType+'/'+userId+'/account')
-      .then(response=>(response.json()))
-      .then(user=>{this.setState({user: user})});
+    this.userService.findAccountInfoForUser(userType, userId)
+      .then(user => this.setState({user: user}));
+
+    // fetch('http://localhost:8080/api/profile/'+userType+'/'+userId+'/account')
+    //   .then(response=>(response.json()))
+    //   .then(user=>{this.setState({user: user})});
   }
 
   render() {

@@ -54,4 +54,9 @@ export default class UserServiceClient {
         }
       })
   }
+
+  findAccountInfoForUser(userType, userId) {
+    return fetch('http://localhost:8080/api/profile/'+userType+'/'+userId+'/account')
+      .then(response=>(response.json()));
+  }
 }
