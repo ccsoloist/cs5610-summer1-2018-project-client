@@ -1,6 +1,8 @@
 import React from "react";
 import DishList from "./DishList";
 import OrderEditor from "./OrderEditor";
+import * as constants from "../constants";
+import RestaurantServiceClient from "../services/RestaurantServiceClient";
 
 export default class RestaurantViewer extends React.Component {
 
@@ -21,6 +23,8 @@ export default class RestaurantViewer extends React.Component {
       //   "category": "Seafood Bars "
       // }
     };
+
+    this.restaurantService = RestaurantServiceClient.instance();
   }
 
   // componentDidMount() {
@@ -71,8 +75,7 @@ export default class RestaurantViewer extends React.Component {
     let yelpId = this.props.match.params.yelpId;
     this.setState({yelpId: yelpId});
 
-    fetch(`http://localhost:8080/api/restaurant/${yelpId}`)
-      .then(response => response.json())
+    this.restaurantService.findRestaurantByYelpId(yelpId)
       .then(restaurant => this.setState({restaurant: restaurant}));
   }
 
@@ -80,8 +83,7 @@ export default class RestaurantViewer extends React.Component {
     let yelpId = newProps.match.params.yelpId;
     this.setState({yelpId: yelpId});
 
-    fetch(`http://localhost:8080/api/restaurant/${yelpId}`)
-      .then(response => response.json())
+    this.restaurantService.findRestaurantByYelpId(yelpId)
       .then(restaurant => this.setState({restaurant: restaurant}));
   }
 

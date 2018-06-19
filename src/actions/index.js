@@ -1,4 +1,7 @@
 import * as constants from '../constants'
+import UserServiceClient from "../services/UserServiceClient";
+
+const userService = UserServiceClient.instance();
 
 export const typeChanged = (dispatch, userType) => {
   dispatch({
@@ -13,36 +16,54 @@ export const Login = (dispatch, userType, username, password) => {
     password: password
     // userType: userType
   };
-  // return fetch('http://localhost:8080/api/login', {
-  return fetch(constants.LOGIN_URL.replace('TYPE', userType), {
-    method: 'put',
-    body: JSON.stringify(user),
-    headers: {
-      'content-type': 'application/json'
-    }
-  }).then((response) => {
-    if (response.status === 404) {
-      // alert("User not found, please register!");
-      return false;
-    } else {
-      alert("Successfully logged in!");
-      return response.json();
-    }
-  }).then(user => {
-    if (user === false) {
-      alert("User not found, please register!");
-      //redirecting
-    } else {
-      dispatch({
-        type: constants.LOGIN,
-        userId: user.id,
-        userType: userType,
-        username: username,
-        password: password
-      });
-      window.location.replace("/profile/"+userType+"/"+user.id);
-    }
-  });
+  // // return fetch('http://localhost:8080/api/login', {
+  // return fetch(constants.LOGIN_URL.replace('TYPE', userType), {
+  //   method: 'put',
+  //   body: JSON.stringify(user),
+  //   headers: {
+  //     'content-type': 'application/json'
+  //   }
+  // }).then((response) => {
+  //   if (response.status === 404) {
+  //     // alert("User not found, please register!");
+  //     return false;
+  //   } else {
+  //     alert("Successfully logged in!");
+  //     return response.json();
+  //   }
+  // }).then(user => {
+  //   if (user === false) {
+  //     alert("User not found, please register!");
+  //     //redirecting
+  //   } else {
+  //     dispatch({
+  //       type: constants.LOGIN,
+  //       userId: user.id,
+  //       userType: userType,
+  //       username: username,
+  //       password: password
+  //     });
+  //     window.location.replace("/profile/"+userType+"/"+user.id);
+  //   }
+  // });
+
+  userService.login(user, userType)
+    .then(user => {
+      if (user === null) {
+        alert("User not found, please register!");
+            //redirecting
+      }
+      else {
+            dispatch({
+              type: constants.LOGIN,
+              userId: user.id,
+              userType: userType,
+              username: username,
+              password: password
+            });
+            window.location.replace("/profile/"+userType+"/"+user.id);
+      }
+    });
 };
 
 export const Register =
@@ -62,33 +83,50 @@ export const Register =
       address: address,
       restaurantName: restaurantName
     };
-    return fetch(constants.REGISTER_URL.replace('TYPE', userType), {
-      method: 'post',
-      body: JSON.stringify(user),
-      headers: {
-        'content-type': 'application/json'
-      }
-    }).then((response) => {
-      if (response.status === 409) {
-        alert("Username already exists!");
-        return false;
-      } else {
-        alert("Successfully registered!");
-        return response.json();
-      }
-    }).then(user => {
-      if (user === false) {
-        alert("User not found, please register!");
-        //redirecting
-      } else {
-        // dispatch({
-        //   type: constants.LOGIN,
-        //   userId: user.id,
-        //   userType: userType,
-        //   username: username,
-        //   password: password
-        // });
-        window.location.replace("/profile/"+userType+"/"+user.id);
-      }
-    });
+
+    // return fetch(constants.REGISTER_URL.replace('TYPE', userType), {
+    //   method: 'post',
+    //   body: JSON.stringify(user),
+    //   headers: {
+    //     'content-type': 'application/json'
+    //   }
+    // }).then((response) => {
+    //   if (response.status === 409) {
+    //     alert("Username already exists!");
+    //     return false;
+    //   } else {
+    //     alert("Successfully registered!");
+    //     return response.json();
+    //   }
+    // }).then(user => {
+    //   if (user === false) {
+    //     alert("User not found, please register!");
+    //     //redirecting
+    //   } else {
+    //     // dispatch({
+    //     //   type: constants.LOGIN,
+    //     //   userId: user.id,
+    //     //   userType: userType,
+    //     //   username: username,
+    //     //   password: password
+    //     // });
+    //     window.location.replace("/profile/"+userType+"/"+user.id);
+    //   }
+    // });
+    userService.register(user, userType)
+      .then(user => {
+          if (user === null) {
+            alert("User not found, please register!");
+            //redirecting
+          } else {
+            dispatch({
+              type: constants.LOGIN,
+              userId: user.id,
+              userType: userType,
+              username: username,
+              password: password
+            });
+            window.location.replace("/profile/" + userType + "/" + user.id);
+          }
+      });
   };

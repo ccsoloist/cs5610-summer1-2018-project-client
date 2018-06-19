@@ -32,6 +32,7 @@ class ProfileEditorContainer extends Component {
     let userType = address[0];
     let userId = address[1];
     this.setState({userType: userType, userId: userId});
+
     fetch('http://localhost:8080/api/profile/'+userType+'/'+userId+'/account')
       .then(response=>(response.json()))
       .then(user=>{this.setState({user: user})});

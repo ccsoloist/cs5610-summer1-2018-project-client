@@ -1,10 +1,11 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import SearchBar from "./SearchBar";
+import * as constants from "../constants";
+import RestaurantServiceClient from "../services/RestaurantServiceClient";
+import YelpServiceClient from "../services/YelpServiceClient";
 
 export default class RestaurantGrid
   extends React.Component {
-
 
   constructor(props) {
     super(props);
@@ -15,6 +16,9 @@ export default class RestaurantGrid
       location: ''
     };
 
+    this.yelpService = YelpServiceClient.instance();
+    this.restaurantService = RestaurantServiceClient.instance();
+
     this.termChanged = this.termChanged.bind(this);
     this.locationChanged = this.locationChanged.bind(this);
     this.findRestaurantsByCriteria = this.findRestaurantsByCriteria.bind(this);
@@ -22,8 +26,7 @@ export default class RestaurantGrid
   }
 
   componentDidMount() {
-    fetch("http://localhost:8080/api/yelp/restaurant")
-      .then(response => response.json())
+    this.yelpService.findAllRestaurants()
       .then(restaurants => this.setState({restaurants: restaurants}));
   }
 
@@ -34,8 +37,7 @@ export default class RestaurantGrid
   locationChanged(event) {
     this.setState({location: event.target.value});
   }
-
-
+  
   findRestaurantsByCriteria() {
     if (this.state.location === '') {
       alert('please specify location');
@@ -43,35 +45,34 @@ export default class RestaurantGrid
 
     else {
       if (this.state.term !== '') {
-        fetch(`http://localhost:8080/api/yelp/restaurant/term/${this.state.term}/location/${this.state.location}`)
-          .then(response => response.json())
+        this.yelpService.findRestaurantByTermAndLocation(this.state.term, this.state.location)
           .then(restaurants => this.setState({restaurants: restaurants}));
       }
       if (this.state.term === '' && this.state.location !== '') {
-        fetch(`http://localhost:8080/api/yelp/restaurant/location/${this.state.location}`)
-          .then(response => response.json())
+        this.yelpService.findRestaurantByLocation(this.state.location)
           .then(restaurants => this.setState({restaurants: restaurants}));
       }
     }
   }
 
   redirectToRestaurant(yelpId) {
-    fetch(`http://localhost:8080/api/restaurant/${yelpId}`)
-      .then(localResponse => {
-        if (localResponse.status !== 404) {
-          this.props.history.push(`restaurant/${yelpId}`);
+    this.restaurantService.findRestaurantByYelpId(yelpId)
+      .then(restaurant => {
+        if (restaurant === null) {
+          alert("Sorry, this restaurant is not our partner. We're working on it.");
+
         }
         else {
-          alert("Sorry, this restaurant is not our partner. We're working on it.");
+          this.props.history.push(`restaurant/${yelpId}`);
         }
-      });
+      })
   }
 
   render() {
     return (
-      <div style={{margin: 20}}>
+      <div>
 
-        <div className="row container-fluid" style={{marginBottom: 30}}>
+        <div className="row container-fluid home-head">
           <h2 className="col-2">Hungya</h2>
 
           <input className="form-control col-3"
@@ -87,18 +88,18 @@ export default class RestaurantGrid
             <i className="fa fa-search"></i>
           </button>
 
-          <div className="col-3 text-center">
+          <div className="col-3 text-right">
             <Link to="/login">Login</Link>
             &nbsp;&nbsp;/&nbsp;&nbsp;
             <Link to="/register">Register</Link>
           </div>
         </div>
 
-
-        <div className="row">
+        <div className="row" style={{margin: 20}}>
           {this.state.restaurants !== undefined &&
           this.state.restaurants.map((restaurant) => {
-            return <div className="col-3" key={restaurant.yelpId}>
+            return (
+              <div className="col-3" key={restaurant.yelpId}>
               <div className="card" style={{marginBottom: 10}}>
                 <img className="card-img-top" style={{width: 250, height: 200}}
                      src={restaurant.image_url} alt="Restaurant Image"/>
@@ -111,13 +112,14 @@ export default class RestaurantGrid
                   {/*<Link to={`restaurant/${restaurant.yelpId}`}>*/}
                   {/*View Detail*/}
                   {/*</Link>*/}
-                  <button className="btn btn-primary"
+                  <button className="btn btn-outline-primary"
                           onClick={() => this.redirectToRestaurant(restaurant.yelpId)}>
                     View Detail
                   </button>
                 </div>
               </div>
-            </div>;
+            </div>
+            );
           })}
         </div>
 

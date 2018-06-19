@@ -102,3 +102,21 @@ body {
 .order-widget-container {
     padding: 6% 10%;
 }
+
+
+.home-search-bar {
+    padding: 1rem 1rem;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 30px;
+    background-color: #e9ecef;
+    border-radius: 0.3rem;
+    background-size: cover;
+    font-size: 140%;
+}
+
+@media (min-width: 576px) {
+    .home-search-bar {
+        padding: 1rem 2rem;
+    }
+}
