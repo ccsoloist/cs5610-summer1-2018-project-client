@@ -1,44 +1,37 @@
-import React from 'react';
+import React from "react";
+import * as actions from "../actions";
+import {createStore} from "redux/index";
+import {connect} from "react-redux";
+import {reducer} from "../reducers";
 
-export default class DishList extends React.Component {
+class DishListContainer extends React.Component {
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      dishes: [
-        {id: 1, name: "pasta", price: 11.20},
-        {id: 2, name: "seafood boiler", price: 22.20},
-        {id: 3, name: "salad", price: 9.20}
-      ]
-    };
-  }
-
-
-  render() {
-    return (
-      <table className="table table-stripped">
-        <thead>
-        <tr>
-          <th className="text-center">Name</th>
-          <th className="text-center">price</th>
-          <th className="text-center">&nbsp;</th>
-        </tr>
-        </thead>
-        <tbody>
-        {this.state.dishes.map((dish) => {
-          return (
-            <tr key={dish.id}>
-              <td className="text-center">{dish.name}</td>
-              <td className="text-center">{dish.price}</td>
-              <td className="text-center"><button className="btn btn-primary">Add to Order</button></td>
-            </tr>
-          );
-        })}
-
-        </tbody>
-      </table>
-    );
-  }
 
 }
+
+
+
+const stateToPropsMapper = (state, ownProps) => {
+
+};
+
+const dispatcherToPropsMapper = (dispatch) => ({
+
+});
+
+const DishListConnected =
+  connect(
+    stateToPropsMapper,
+    dispatcherToPropsMapper)(DishListContainer);
+
+const store = createStore(reducer);
+
+const DishList = state => {
+  return (
+    <Provider store={store}>
+      <DishListConnected restaurantId={state.restaurantId}/>
+    </Provider>
+  );
+};
+
+export default DishList;

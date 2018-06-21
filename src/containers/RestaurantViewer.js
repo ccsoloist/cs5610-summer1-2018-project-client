@@ -1,5 +1,5 @@
 import React from "react";
-import DishList from "./DishList";
+import DishList2 from "./DishList2";
 import OrderEditor from "./OrderEditor";
 import * as constants from "../constants";
 import RestaurantServiceClient from "../services/RestaurantServiceClient";
@@ -9,19 +9,8 @@ export default class RestaurantViewer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      yelpId: '',
+      restaurantId: this.props.match.params.restaurantId,
       restaurant: {}
-      // restaurant: {
-      //   "id": 1,
-      //   "yelpId": "y2w6rFaO0XEiG5mFfOsiFA",
-      //   "name": "Neptune Oyster",
-      //   "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/oF9AqeZFT3Kg0N4peP_-4A/o.jpg",
-      //   "phone": "+16177423474",
-      //   "display_phone": "(617) 742-3474",
-      //   "address": "63 Salem St, Boston, MA 02113",
-      //   "rating": 4,
-      //   "category": "Seafood Bars "
-      // }
     };
 
     this.restaurantService = RestaurantServiceClient.instance();
@@ -72,18 +61,18 @@ export default class RestaurantViewer extends React.Component {
   // }
 
   componentDidMount() {
-    let yelpId = this.props.match.params.yelpId;
-    this.setState({yelpId: yelpId});
+    let restaurantId = this.props.match.params.restaurantId;
 
-    this.restaurantService.findRestaurantByYelpId(yelpId)
+    this.setState({restaurantId: restaurantId});
+    this.restaurantService.findRestaurantById(restaurantId)
       .then(restaurant => this.setState({restaurant: restaurant}));
   }
 
   componentWillReceiveProps(newProps) {
-    let yelpId = newProps.match.params.yelpId;
-    this.setState({yelpId: yelpId});
+    let restaurantId = newProps.match.params.restaurantId;
 
-    this.restaurantService.findRestaurantByYelpId(yelpId)
+    this.setState({restaurantId: restaurantId});
+    this.restaurantService.findRestaurantById(restaurantId)
       .then(restaurant => this.setState({restaurant: restaurant}));
   }
 
@@ -140,14 +129,14 @@ export default class RestaurantViewer extends React.Component {
           </div>
           <div className='col-8'>
             <h1>Menu</h1>
-            <DishList/>
+            <DishList2 restaurantId={this.state.restaurantId}/>
           </div>
         </div>
         }
 
-        {this.state.restaurant.id === 0 &&
-        <div>This restaurant is currently not our partner. We're working on it.</div>
-        }
+        {/*{this.state.restaurant.id === 0 &&*/}
+        {/*<div>This restaurant is currently not our partner. We're working on it.</div>*/}
+        {/*}*/}
 
       </div>
     )

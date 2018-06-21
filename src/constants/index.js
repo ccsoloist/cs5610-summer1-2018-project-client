@@ -14,3 +14,8 @@ export const LOGIN = 'LOGIN';
 export const CUSTOMER = 'customer';
 export const RESTAURATEUR = 'restaurateur';
 export const DELIVERER = 'deliverer';
+
+export const DELETE_DISH = "DELETE_DISH";
+export const ADD_DISH = "ADD_DISH";
+export const FIND_ALL_DISHES_FOR_RESTAURANT = "FIND_ALL_DISHES_FOR_RESTAURANT";
+export const SAVE_ALL_DISHES_FOR_RESTAURANT = "SAVE_ALL_DISHES_FOR_RESTAURANT";
