@@ -14,7 +14,7 @@ class AccountEditorContainer extends Component {
     this.state = {
       // userType:this.props.,
       user: this.props.user
-   }
+   };
    this.updateForm = this.updateForm.bind(this);
   }
 
@@ -125,20 +125,23 @@ const stateToPropsMapper = (state, ownProps) => {
 
 const dispatcherToPropsMapper = dispatch => ({});
 
-const AccountEditorConnected = connect(
+const AccountEditor = connect(
   // stateToPropsMapper,
   dispatcherToPropsMapper
 )(AccountEditorContainer);
 
 const store = createStore(reducer);
 
-const AccountEditor = state => {
-  // console.log(state);
-  return (
-  <Provider store={store}>
-    <AccountEditorConnected user={state.user} userType={state.userType} userId={state.userId}/>
-  </Provider>
-  )
-};
+// const AccountEditor = state => {
+//   // console.log(state);
+//   return (
+//   <Provider store={store}>
+//     <AccountEditorConnected
+//       user={state.user}
+//       userType={state.userType}
+//       userId={state.userId}/>
+//   </Provider>
+//   )
+// };
 
 export default AccountEditor;

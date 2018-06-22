@@ -2,6 +2,13 @@ import * as constants from '../constants'
 
 export const reducer = (state, action) => {
   switch (action.type) {
+    case constants.CLAIM_RESTAURANT:
+      return {
+        userType: action.userType,
+        claimed: action.claimed,
+        restaurantId: action.restaurantId
+      };
+
     case constants.USER_TYPE_CHANGED:
       return {
         userType: action.userType

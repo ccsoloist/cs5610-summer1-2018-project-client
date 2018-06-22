@@ -5,13 +5,26 @@ import DishServiceClient from "../services/DishServiceClient";
 
 const userService = UserServiceClient.instance();
 const dishService = DishServiceClient.instance();
+const restaurantService = RestaurantServiceClient.instance();
 
-export const typeChanged = (dispatch, userType) => {
-  dispatch({
-    type: constants.USER_TYPE_CHANGED,
-    userType: userType
-  })
+export const claimRestaurant = (dispatch, userType, claimed, phone) => {
+  restaurantService.claimRestaurantByPhone(phone)
+    .then(response => {
+      console.log(response);
+      dispatch({
+        type: constants.CLAIM_RESTAURANT,
+        userType: userType,
+        claimed: response === false ? claimed : !claimed,
+        restaurantId: response // id in local database
+      })
+    });
 };
+
+export const typeChanged = (dispatch, userType) => dispatch({
+  type: constants.USER_TYPE_CHANGED,
+  userType: userType
+});
+
 
 export const Login = (dispatch, userType, username, password) => {
   let user = {
@@ -70,7 +83,7 @@ export const Login = (dispatch, userType, username, password) => {
 };
 
 export const Register =
-  (dispatch, userType, username, password, confirm,
+  (dispatch, userType, restaurantId, username, password, confirm,
    firstName, lastName, restaurantName, email, phone, address) => {
     if (password.toString() !== confirm.toString()) {
       alert("Password and Confirm password should be same!");
@@ -84,7 +97,8 @@ export const Register =
       email: email,
       phone: phone,
       address: address,
-      restaurantName: restaurantName
+      restaurantName: restaurantName,
+      restaurantId: restaurantId
     };
 
     // return fetch(constants.REGISTER_URL.replace('TYPE', userType), {

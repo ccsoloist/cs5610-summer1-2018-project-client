@@ -36,14 +36,14 @@ export default class UserServiceClient {
   }
 
   register(user, userType) {
-    return fetch(constants.REGISTER_URL.replace('TYPE', userType), {
-      method: 'post',
-      body: JSON.stringify(user),
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
-      .then(response => {
+    if (userType === constants.RESTAURATEUR) {
+      return fetch(constants.REGISTER_URL.replace('TYPE', userType) + "/" + user.restaurantId, {
+        method: 'post',
+        body: JSON.stringify(user),
+        headers: {
+          'content-type': 'application/json'
+        }
+      }).then(response => {
         if (response.status === 409) {
           alert("Username already exists!");
           return null;
@@ -52,11 +52,30 @@ export default class UserServiceClient {
           alert("Successfully registered!");
           return response.json();
         }
+      });
+    } else {
+      return fetch(constants.REGISTER_URL.replace('TYPE', userType), {
+        method: 'post',
+        body: JSON.stringify(user),
+        headers: {
+          'content-type': 'application/json'
+        }
       })
+        .then(response => {
+          if (response.status === 409) {
+            alert("Username already exists!");
+            return null;
+          }
+          else {
+            alert("Successfully registered!");
+            return response.json();
+          }
+        });
+    }
   }
 
   findAccountInfoForUser(userType, userId) {
-    return fetch('http://localhost:8080/api/profile/'+userType+'/'+userId+'/account')
-      .then(response=>(response.json()));
+    return fetch('http://localhost:8080/api/profile/' + userType + '/' + userId + '/account')
+      .then(response => (response.json()));
   }
 }

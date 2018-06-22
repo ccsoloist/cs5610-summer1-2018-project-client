@@ -7,10 +7,16 @@ import * as actions from '../actions'
 import '../styles/index.css'
 import '../styles/validation.scss'
 
-const RegisterFormContainer = ({userType, typeChanged, register}) => {
+const RegisterFormContainer = (
+  {userType, typeChanged, register, claimRestaurant, claimed, restaurantId}
+) => {
   let select;
+  // Register Fields left
   let input_un, input_pw, input_cf, input_fn;
+  // Register Fields right
   let input_ln, input_rn, input_em, input_ph, input_ad;
+  // Claim Restaurant Fields
+  let input_ct, input_st, input_cr, input_ra, input_rph;
 
   return (
     <div className="register-form-container">
@@ -56,23 +62,14 @@ const RegisterFormContainer = ({userType, typeChanged, register}) => {
             <div className="form-group"
                  hidden={userType !== constants.RESTAURATEUR}>
               <label>Restaurant Name</label>
-              <div className="form-group row">
-                <div className="col-8">
-                  <input type="text"
+              <input type="text"
                          className="form-control"
                          placeholder="Restaurant Name"
                          ref={node => input_rn = node} required/>
-                </div>
-                <div className="col-4">
-                  <button type="button"
-                          className="form-control btn btn-success">
-                    Claim!
-                  </button>
-                </div>
-              </div>
             </div>
 
-            <div className="form-group row"
+
+              <div className="form-group row"
                  hidden={userType === constants.RESTAURATEUR}>
               <div className="col">
                 <label>First Name</label>
@@ -90,6 +87,14 @@ const RegisterFormContainer = ({userType, typeChanged, register}) => {
               </div>
             </div>
 
+            <div className="form-group"
+                 hidden={userType === constants.RESTAURATEUR}>
+              <label>Phone</label>
+              <input className="form-control"
+                     placeholder="Enter phone"
+                     ref={node => input_ph = node} required/>
+            </div>
+
             <div className="form-group">
               <label>Email</label>
               <input className="form-control"
@@ -97,11 +102,30 @@ const RegisterFormContainer = ({userType, typeChanged, register}) => {
                      ref={node => input_em = node} required/>
             </div>
 
-            <div className="form-group">
-              <label>Phone</label>
-              <input className="form-control"
-                     placeholder="Enter phone"
-                     ref={node => input_ph = node} required/>
+            <div className="claim-restaurant-box"
+                 hidden={userType !== constants.RESTAURATEUR}>
+              <span>&nbsp;</span>
+              <div className="form-group">
+                <label>Claim by phone 14159083801</label>
+                <input type="text"
+                       className="form-control"
+                       placeholder="Enter Phone"
+                       ref={node => input_rph = node} required/>
+              </div>
+
+              <div className="form-group">
+                <div className="col-12">
+                  {/*<span>&nbsp;</span>*/}
+                  <button type="button"
+                          onClick={() => claimRestaurant(
+                            userType, claimed, input_rph.value)}
+                          className="form-control btn btn-success">
+                    Claim!
+                  </button>
+                </div>
+                <span>&nbsp;</span>
+              </div>
+
             </div>
 
             <div className="form-group"
@@ -116,8 +140,9 @@ const RegisterFormContainer = ({userType, typeChanged, register}) => {
         <div className="form-group row">
           <div className="col-12">
             <button type="button"
+                    disabled={!claimed && userType === constants.RESTAURATEUR}
                     className="form-control btn btn-primary"
-                    onClick={() => register(userType, input_un.value,
+                    onClick={() => register(userType, restaurantId, input_un.value,
                       input_pw.value, input_cf.value, input_fn.value,
                       input_ln.value, input_rn.value, input_em.value,
                       input_ph.value, input_ad.value)}>
@@ -133,21 +158,27 @@ const RegisterFormContainer = ({userType, typeChanged, register}) => {
 const stateToPropsMapper = (state, ownProps) => {
   if (state != null) {
     return {
-      userType: state.userType
+      userType: state.userType,
+      claimed: state.claimed,
+      restaurantId: state.restaurantId
     }
   }
   return {
-    userType: ownProps.userType
+    userType: ownProps.userType,
+    claimed: ownProps.claimed,
+    restaurantId: ownProps.restaurantId
   }
 };
 
 const dispatcherToPropsMapper = dispatch => ({
   typeChanged: (userType) =>
     actions.typeChanged(dispatch, userType),
-  register: (userType, username, password, confirm, firstName,
+  register: (userType, restaurantId, username, password, confirm, firstName,
              lastName, restaurantName, email, phone, address) =>
-    actions.Register(dispatch, userType, username, password, confirm,
-      firstName, lastName, restaurantName, email, phone, address)
+    actions.Register(dispatch, userType, restaurantId, username, password, confirm,
+      firstName, lastName, restaurantName, email, phone, address),
+  claimRestaurant: (userType, claimed, phone) =>
+    actions.claimRestaurant(dispatch, userType, claimed, phone)
 });
 
 const RegisterFormConnected = connect(
@@ -159,7 +190,10 @@ const store = createStore(reducer);
 
 const RegisterForm = state => (
   <Provider store={store}>
-    <RegisterFormConnected userType={constants.CUSTOMER}/>
+    <RegisterFormConnected
+      restaurantId={-1}
+      claimed={false}
+      userType={constants.RESTAURATEUR}/>
   </Provider>
 );
 
