@@ -1,5 +1,5 @@
 import React from "react";
-import DishList2 from "./DishList2";
+import DishList2 from "./DishList";
 import OrderEditor from "./OrderEditor";
 import * as constants from "../constants";
 import RestaurantServiceClient from "../services/RestaurantServiceClient";

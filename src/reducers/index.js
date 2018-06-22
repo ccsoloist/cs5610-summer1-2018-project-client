@@ -18,11 +18,18 @@ export const reducer = (state, action) => {
       };
 
     case constants.DELETE_DISH:
+
       console.log('in reducer');
-      console.log(action.dishes);
-       return {
-         dishes: action.dishes
-       };
+      console.log(state);
+
+      let dishes = action.dishes.map((dish) => {
+        return Object.assign({}, dish);
+      });
+      return {dishes: dishes};
+
+       // return {
+       //   dishes: action.dishes
+       // };
 
     case constants.ADD_DISH:
       console.log('in reducer');

@@ -8,6 +8,7 @@ import * as actions from '../actions'
 const DishListItemComponent = ({dish, deleteDish, dishes, restaurantId}) => {
   // console.log(dish.id);
   // console.log(dishes);
+
   return (
     <tr>
       <td className="text-center">{dish.name}</td>
@@ -30,34 +31,25 @@ const dispatcherToPropsMapper = (dispatch) => ({
 
 const stateToPropsMapper = (state, ownProps) => {
   if (state !== undefined) {
+    console.log('in dish list item');
+    console.log(state.dishes);
     return {
       dish: ownProps.dish,
       restaurantId: ownProps.restaurantId,
-      dishes: state.dishes,
+      dishes: state.dishes
     }
   }
   if (ownProps !== undefined) {
     return {
       dish: ownProps.dish,
       restaurantId: ownProps.restaurantId,
-      dishes: [],
+      dishes: ownProps.dishes
     }
   }
 };
 
-const DishListItemConnected =
+const DishListItem =
   connect(stateToPropsMapper, dispatcherToPropsMapper)(DishListItemComponent);
 
-const store = createStore(reducer);
-
-const DishListItem = state => (
-  <Provider store={store}>
-    <DishListItemConnected dish={state.dish}
-                           // deleteDish={state.deleteDish()}
-                           restaurantId={state.restaurantId}
-                           dishes={state.dishes}
-    />
-  </Provider>
-);
 
 export default DishListItem;

@@ -135,7 +135,10 @@ export const Register =
   };
 
 export const deleteDish = (dispatch, dishId, position, dishes, restaurantId) => {
-  // dishService.deleteDishForRestaurant(restaurantId, dishId);
+  // if (dishId !== 0) {
+  //   dishService.deleteDishForRestaurant(restaurantId, dishId);
+  // }
+  dishService.deleteDishForRestaurant(restaurantId, dishId);
 
   let newDishes = dishes.filter((dish) => (dish.id !== dishId));
   if (position !== dishes.length) {
@@ -159,12 +162,15 @@ export const addDish = (dispatch, dishName, dishPrice, dishes, restaurantId) => 
     price: dishPrice,
     position: dishes.length + 1
   };
-  // dishService.createDishForRestaurant(restaurantId, dish);
+  dishService.createDishForRestaurant(restaurantId, dish);
 
-  dispatch({
-    type: constants.ADD_DISH,
-    dishes: [...dishes, dish]
-  })
+  dishService.findAllDishesForRestaurant(restaurantId)
+    .then((dishes) => {
+      dispatch({
+        type: constants.ADD_DISH,
+        dishes: dishes
+      });
+    });
 };
 
 export const findAllDishesForRestaurant = (dispatch, restaurantId) => {

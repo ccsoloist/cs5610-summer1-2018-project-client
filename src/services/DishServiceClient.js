@@ -29,29 +29,29 @@ export default class DishServiceClient {
       });
   }
 
-  // deleteDishForRestaurant(restaurantId, dishId) {
-  //   return fetch(constants.SERVER + `/restaurant/${restaurantId}/dish/${dishId}`, {
-  //     method: 'delete'
-  //   });
-  // }
-  //
-  // createDishForRestaurant(restaurantId, dish) {
-  //   return fetch(constants.SERVER + `/restaurant/${restaurantId}/dish`, {
-  //     method: 'post',
-  //     body: JSON.stringify(dish),
-  //     headers: {
-  //       'content-type': 'application/json'
-  //     }
-  //   })
-  //     .then(response => {
-  //       if (response.status === 404) {
-  //         return null;
-  //       }
-  //       else {
-  //         return response.json();
-  //       }
-  //     });
-  // }
+  deleteDishForRestaurant(restaurantId, dishId) {
+    return fetch(constants.SERVER + `/restaurant/${restaurantId}/dish/${dishId}`, {
+      method: 'delete'
+    });
+  }
+
+  createDishForRestaurant(restaurantId, dish) {
+    return fetch(constants.SERVER + `/restaurant/${restaurantId}/dish`, {
+      method: 'post',
+      body: JSON.stringify(dish),
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.status === 404) {
+          return null;
+        }
+        else {
+          return response.json();
+        }
+      });
+  }
 
   saveAllDishesForRestaurant(restaurantId, dishes) {
     console.log('in client service');

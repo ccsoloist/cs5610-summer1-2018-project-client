@@ -9,14 +9,14 @@ import {Router} from "react-router-dom";
 import Route from "react-router-dom/es/Route";
 import RestaurantViewer from "./containers/RestaurantViewer";
 import App from "./containers/App";
-import DishList2 from "./containers/DishList2";
+import DishList from "./containers/DishList";
 import {reducer} from "./reducers";
 import {createStore} from "redux";
 import {Provider} from "react-redux";
 
 
 ReactDOM.render(
-  <DishList2 restaurantId={1}/>,
+  <DishList restaurantId={1}/>,
   document.getElementById('root')
 );
 
