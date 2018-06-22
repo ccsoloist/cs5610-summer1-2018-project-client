@@ -86,4 +86,26 @@ export default class RestaurantServiceClient {
         });
       });
   }
+
+  findRestaurantById(restaurantId) {
+    return fetch(constants.SERVER + `/restaurant/${restaurantId}`)
+      .then(response => {
+        if (response.status == 404) {
+          return null;
+        }
+        else {
+          return response.json();
+        }
+      });
+  }
+
+  saveAllDishesForRestaurant(restaurantId, dishes) {
+    return fetch(constants.SERVER + `/restaurant/${restaurantId}`, {
+      method: 'post',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(dishes)
+    });
+  }
 }

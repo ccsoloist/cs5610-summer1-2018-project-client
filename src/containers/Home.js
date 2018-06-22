@@ -72,10 +72,10 @@ export default class Home
       .then(restaurant => {
         if (restaurant === null) {
           alert("Sorry, this restaurant is not our partner. We're working on it.");
-
         }
         else {
-          this.props.history.push(`restaurant/${yelpId}`);
+          // window.location.replace(`restaurant/${restaurant.id}`);
+          this.props.history.push(`restaurant/${restaurant.id}`);
         }
       })
   }

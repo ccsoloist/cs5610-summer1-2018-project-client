@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from "react-router-dom/es/Link";
+import {Link}from "react-router-dom";
 import YelpServiceClient from "../services/YelpServiceClient";
 import RestaurantServiceClient from "../services/RestaurantServiceClient";
 

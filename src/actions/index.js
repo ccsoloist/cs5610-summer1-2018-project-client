@@ -1,8 +1,10 @@
 import * as constants from '../constants'
 import UserServiceClient from "../services/UserServiceClient";
 import RestaurantServiceClient from "../services/RestaurantServiceClient";
+import DishServiceClient from "../services/DishServiceClient";
 
 const userService = UserServiceClient.instance();
+const dishService = DishServiceClient.instance();
 const restaurantService = RestaurantServiceClient.instance();
 
 export const claimRestaurant = (dispatch, userType, claimed, phone) => {
@@ -145,3 +147,101 @@ export const Register =
         }
       });
   };
+
+export const deleteDish = (dispatch, dishId, position, dishes, restaurantId) => {
+  // if (dishId !== 0) {
+  //   dishService.deleteDishForRestaurant(restaurantId, dishId);
+  // }
+  dishService.deleteDishForRestaurant(restaurantId, dishId);
+
+  let newDishes = dishes.filter((dish) => (dish.id !== dishId));
+  if (position !== dishes.length) {
+    newDishes.map((dish) => {
+      if (dish.position > position) {
+        dish.position--;
+      }
+    });
+  }
+
+  dispatch({
+    type: constants.DELETE_DISH,
+    dishes: newDishes
+  });
+};
+
+export const addDish = (dispatch, dishName, dishPrice, dishes, restaurantId) => {
+  let dish = {
+    id: 0,
+    name: dishName,
+    price: dishPrice,
+    position: dishes.length + 1
+  };
+  dishService.createDishForRestaurant(restaurantId, dish)
+    .then(() => {
+      dishService.findAllDishesForRestaurant(restaurantId)
+        .then((dishes) => {
+          dispatch({
+            type: constants.ADD_DISH,
+            dishes: dishes
+          });
+        });
+    });
+};
+
+export const findAllDishesForRestaurant = (dispatch, restaurantId) => {
+  dishService.findAllDishesForRestaurant(restaurantId)
+    .then((dishes) => {
+      dispatch({
+        type: constants.FIND_ALL_DISHES_FOR_RESTAURANT,
+        dishes: dishes,
+        restaurantId: restaurantId
+      });
+    });
+};
+
+export const saveAllDishesForRestaurantId = (dispatch, restaurantId, dishes) => {
+  dishService.saveAllDishesForRestaurant(restaurantId, dishes);
+  dispatch({
+    type: constants.SAVE_ALL_DISHES_FOR_RESTAURANT,
+    dishes: dishes,
+    restaurantId: restaurantId
+  });
+};
+
+export const switchEdit = (dispatch, selectedDishId, editMode, dishes, restaurantId) => {
+  dispatch({
+    type: constants.SWITCH_EDIT_MODE,
+    selectedDishId: selectedDishId,
+    editMode: true,
+    dishes: dishes,
+    restaurantId: restaurantId
+  });
+};
+
+export const updateDish = (dispatch, editMode, dishes, restaurantId, dish, name, price) => {
+  let dishId = dish.id;
+  let newDish = {
+    id: dishId,
+    name: name,
+    price: price,
+    position: dish.position
+  };
+
+  dishService.updateDish(dishId, newDish);
+
+  let newDishes = dishes.map(dish => {
+    if (dish.id === dishId) {
+      return newDish;
+    }
+    else {
+      return dish;
+    }
+  });
+
+  dispatch({
+    type: constants.UPDATE_DISH,
+    dishes: newDishes,
+    editMode: !editMode,
+    restaurantId: restaurantId
+  });
+};

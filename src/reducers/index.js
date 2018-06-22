@@ -24,6 +24,47 @@ export const reducer = (state, action) => {
         userId: action.userId
       };
 
+    case constants.DELETE_DISH:
+      let dishes = action.dishes.map((dish) => {
+        return Object.assign({}, dish);
+      });
+      return {dishes: dishes};
+
+       // return {
+       //   dishes: action.dishes
+       // };
+
+    case constants.ADD_DISH:
+      return {
+        dishes: action.dishes
+      };
+
+    case constants.FIND_ALL_DISHES_FOR_RESTAURANT:
+      return {
+        restaurantId: action.restaurantId,
+        dishes: action.dishes
+      };
+
+    case constants.SAVE_ALL_DISHES_FOR_RESTAURANT:
+      return {
+        restaurantId: action.restaurantId,
+        dishes: action.dishes
+      };
+
+    case constants.UPDATE_DISH:
+      return {
+        restaurantId: action.restaurantId,
+        dishes: action.dishes
+      };
+
+    case constants.SWITCH_EDIT_MODE:
+      return {
+        selectedDishId: action.selectedDishId,
+        editMode: action.editMode,
+        restaurantId: action.restaurantId,
+        dishes: action.dishes
+      };
+
     default: return state;
   }
 };
