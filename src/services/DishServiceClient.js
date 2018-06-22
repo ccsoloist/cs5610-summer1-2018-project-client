@@ -65,4 +65,17 @@ export default class DishServiceClient {
       }
     });
   }
+
+  updateDish(dishId, dish) {
+    console.log('in client service');
+    console.log(dish);
+
+    return fetch(constants.SERVER + `/dish/${dishId}`, {
+      method: 'put',
+      body: JSON.stringify(dish),
+      headers: {
+        'content-type': 'application/json'
+      }
+    });
+  }
 }

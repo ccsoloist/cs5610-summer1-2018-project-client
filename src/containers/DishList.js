@@ -32,7 +32,7 @@ class DishListContainer extends React.Component {
 
     return (
       <div className="container-fluid">
-        <div>
+        <div className="row">
           <input className="form-control col-4"
                  placeholder="Dish Name"
                  type="text"
@@ -62,17 +62,13 @@ class DishListContainer extends React.Component {
           {this.props.dishes.map(dish => {
             return (
               <DishListItem dish={dish}
-                            key={dish.position}
+                            key={dish.id}
                             restaurantId={this.props.restaurantId}
                             dishes={this.props.dishes}/>
             );
           })}
           </tbody>
         </table>
-        <button className="btn btn-primary btn-block"
-                onClick={() => this.props.saveAllDishesForRestaurant(this.props.restaurantId, this.props.dishes)}>Save
-          changes
-        </button>
 
       </div>
     )
@@ -97,10 +93,14 @@ const stateToPropsMapper = (state, ownProps) => {
 };
 
 const dispatcherToPropsMapper = (dispatch) => ({
-  deleteDish: (dishId, position, dishes, restaurantId) => actions.deleteDish(dispatch, dishId, position, dishes, restaurantId),
-  addDish: (dishName, dishPrice, dishes, restaurantId) => actions.addDish(dispatch, dishName, dishPrice, dishes, restaurantId),
-  findAllDishesForRestaurant: (restaurantId) => actions.findAllDishesForRestaurant(dispatch, restaurantId),
-  saveAllDishesForRestaurant: (restaurantId, dishes) => actions.saveAllDishesForRestaurantId(dispatch, restaurantId, dishes)
+  deleteDish: (dishId, position, dishes, restaurantId) =>
+    actions.deleteDish(dispatch, dishId, position, dishes, restaurantId),
+  addDish: (dishName, dishPrice, dishes, restaurantId) =>
+    actions.addDish(dispatch, dishName, dishPrice, dishes, restaurantId),
+  findAllDishesForRestaurant: (restaurantId) =>
+    actions.findAllDishesForRestaurant(dispatch, restaurantId),
+  saveAllDishesForRestaurant: (restaurantId, dishes) =>
+    actions.saveAllDishesForRestaurantId(dispatch, restaurantId, dishes)
 });
 
 const DishListConnected =

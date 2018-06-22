@@ -54,17 +54,17 @@ export const Login = (dispatch, userType, username, password) => {
     .then(user => {
       if (user === null) {
         alert("User not found, please register!");
-            //redirecting
+        //redirecting
       }
       else {
-            dispatch({
-              type: constants.LOGIN,
-              userId: user.id,
-              userType: userType,
-              username: username,
-              password: password
-            });
-            window.location.replace("/profile/"+userType+"/"+user.id);
+        dispatch({
+          type: constants.LOGIN,
+          userId: user.id,
+          userType: userType,
+          username: username,
+          password: password
+        });
+        window.location.replace("/profile/" + userType + "/" + user.id);
       }
     });
 };
@@ -118,19 +118,19 @@ export const Register =
     // });
     userService.register(user, userType)
       .then(user => {
-          if (user === null) {
-            alert("User not found, please register!");
-            //redirecting
-          } else {
-            dispatch({
-              type: constants.LOGIN,
-              userId: user.id,
-              userType: userType,
-              username: username,
-              password: password
-            });
-            window.location.replace("/profile/" + userType + "/" + user.id);
-          }
+        if (user === null) {
+          alert("User not found, please register!");
+          //redirecting
+        } else {
+          dispatch({
+            type: constants.LOGIN,
+            userId: user.id,
+            userType: userType,
+            username: username,
+            password: password
+          });
+          window.location.replace("/profile/" + userType + "/" + user.id);
+        }
       });
   };
 
@@ -162,14 +162,15 @@ export const addDish = (dispatch, dishName, dishPrice, dishes, restaurantId) => 
     price: dishPrice,
     position: dishes.length + 1
   };
-  dishService.createDishForRestaurant(restaurantId, dish);
-
-  dishService.findAllDishesForRestaurant(restaurantId)
-    .then((dishes) => {
-      dispatch({
-        type: constants.ADD_DISH,
-        dishes: dishes
-      });
+  dishService.createDishForRestaurant(restaurantId, dish)
+    .then(() => {
+      dishService.findAllDishesForRestaurant(restaurantId)
+        .then((dishes) => {
+          dispatch({
+            type: constants.ADD_DISH,
+            dishes: dishes
+          });
+        });
     });
 };
 
@@ -185,9 +186,6 @@ export const findAllDishesForRestaurant = (dispatch, restaurantId) => {
 };
 
 export const saveAllDishesForRestaurantId = (dispatch, restaurantId, dishes) => {
-  console.log('in action');
-  console.log(dishes);
-
   dishService.saveAllDishesForRestaurant(restaurantId, dishes);
   dispatch({
     type: constants.SAVE_ALL_DISHES_FOR_RESTAURANT,
@@ -196,14 +194,40 @@ export const saveAllDishesForRestaurantId = (dispatch, restaurantId, dishes) => 
   });
 };
 
-export const switchEdit = (dispatch, editMode, dishes, restaurantId) => {
-  console.log('in action');
-  console.log(editMode);
-
+export const switchEdit = (dispatch, selectedDishId, editMode, dishes, restaurantId) => {
   dispatch({
     type: constants.SWITCH_EDIT_MODE,
-    editMode: !editMode,
+    selectedDishId: selectedDishId,
+    editMode: true,
     dishes: dishes,
+    restaurantId: restaurantId
+  });
+};
+
+export const updateDish = (dispatch, editMode, dishes, restaurantId, dish, name, price) => {
+  let dishId = dish.id;
+  let newDish = {
+    id: dishId,
+    name: name,
+    price: price,
+    position: dish.position
+  };
+
+  dishService.updateDish(dishId, newDish);
+
+  let newDishes = dishes.map(dish => {
+    if (dish.id === dishId) {
+      return newDish;
+    }
+    else {
+      return dish;
+    }
+  });
+
+  dispatch({
+    type: constants.UPDATE_DISH,
+    dishes: newDishes,
+    editMode: !editMode,
     restaurantId: restaurantId
   });
 };

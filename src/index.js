@@ -19,6 +19,3 @@ ReactDOM.render(
   <DishList restaurantId={1}/>,
   document.getElementById('root')
 );
-
-
-{/*<DishList2 restaurantId={2}/>*/}
