@@ -66,11 +66,8 @@ export default class DishServiceClient {
     });
   }
 
-  updateDish(dishId, dish) {
-    console.log('in client service');
-    console.log(dish);
-
-    return fetch(constants.SERVER + `/dish/${dishId}`, {
+  updateDish(restaurantId, dishId, dish) {
+    return fetch(constants.SERVER + `/restaurant/${restaurantId}/dish/${dishId}`, {
       method: 'put',
       body: JSON.stringify(dish),
       headers: {

@@ -213,7 +213,7 @@ export const updateDish = (dispatch, editMode, dishes, restaurantId, dish, name,
     position: dish.position
   };
 
-  dishService.updateDish(dishId, newDish);
+  dishService.updateDish(restaurantId, dishId, newDish);
 
   let newDishes = dishes.map(dish => {
     if (dish.id === dishId) {
@@ -231,3 +231,13 @@ export const updateDish = (dispatch, editMode, dishes, restaurantId, dish, name,
     restaurantId: restaurantId
   });
 };
+
+export const addDishToOrder = (dispatch, dish) => {
+  dispatch({
+    type: constants.ADD_DISH_TO_ORDER,
+    items: {
+      name: dish.name,
+      amount: 1
+    }
+  });
+}

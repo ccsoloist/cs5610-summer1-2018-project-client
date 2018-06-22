@@ -1,8 +1,11 @@
 import React from "react";
-import DishList2 from "./DishList";
 import OrderEditor from "./OrderEditor";
 import * as constants from "../constants";
 import RestaurantServiceClient from "../services/RestaurantServiceClient";
+import DishServiceClient from "../services/DishServiceClient";
+import Menu from "./Menu";
+import OrderWidget from "../components/OrderWidget";
+import PlaceOrderWidget from "./PlaceOrderWidget";
 
 export default class RestaurantViewer extends React.Component {
 
@@ -10,10 +13,12 @@ export default class RestaurantViewer extends React.Component {
     super(props);
     this.state = {
       restaurantId: this.props.match.params.restaurantId,
-      restaurant: {}
+      restaurant: {},
+      dishes: []
     };
 
     this.restaurantService = RestaurantServiceClient.instance();
+    // this.dishService = DishServiceClient.instance();
   }
 
   // componentDidMount() {
@@ -66,6 +71,9 @@ export default class RestaurantViewer extends React.Component {
     this.setState({restaurantId: restaurantId});
     this.restaurantService.findRestaurantById(restaurantId)
       .then(restaurant => this.setState({restaurant: restaurant}));
+
+    // this.dishService.findAllDishesForRestaurant(restaurantId)
+    //   .then(dishes => this.setState({dishes: dishes}));
   }
 
   componentWillReceiveProps(newProps) {
@@ -74,6 +82,9 @@ export default class RestaurantViewer extends React.Component {
     this.setState({restaurantId: restaurantId});
     this.restaurantService.findRestaurantById(restaurantId)
       .then(restaurant => this.setState({restaurant: restaurant}));
+
+    // this.dishService.findAllDishesForRestaurant(restaurantId)
+    //   .then(dishes => this.setState({dishes: dishes}));
   }
 
   render() {
@@ -121,18 +132,11 @@ export default class RestaurantViewer extends React.Component {
           </div>
         </div>
 
-        {this.state.restaurant.id !== 0 &&
-        <div className='row'>
-          <div className='col-4'>
-            <h1>OrderEditor</h1>
-            <OrderEditor/>
-          </div>
-          <div className='col-8'>
-            <h1>Menu</h1>
-            <DishList2 restaurantId={this.state.restaurantId}/>
-          </div>
-        </div>
-        }
+
+        <PlaceOrderWidget restaurantId={this.state.restaurantId}/>
+
+
+        {/*<PlaceOrderWidget dishes={this.state.dishes}/>*/}
 
         {/*{this.state.restaurant.id === 0 &&*/}
         {/*<div>This restaurant is currently not our partner. We're working on it.</div>*/}

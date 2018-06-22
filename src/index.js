@@ -13,9 +13,22 @@ import DishList from "./containers/DishList";
 import {reducer} from "./reducers";
 import {createStore} from "redux";
 import {Provider} from "react-redux";
+import Menu from "./containers/Menu";
+import Home from "./containers/Home";
+
+
+let dishes = [
+  {id: 1, name: 'pizza', price: 12},
+  {id: 2, name: 'burger', price: 8},
+  {id: 3, name: 'salade', price: 9}
+];
 
 
 ReactDOM.render(
-  <DishList restaurantId={1}/>,
+  <App/>,
   document.getElementById('root')
 );
+
+
+
+{/*<DishList restaurantId={1}/>,*/}

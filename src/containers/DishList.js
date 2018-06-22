@@ -77,8 +77,6 @@ class DishListContainer extends React.Component {
 
 const stateToPropsMapper = (state, ownProps) => {
   if (state !== undefined) {
-    console.log('in dish list');
-    console.log(state.dishes);
     return {
       dishes: state.dishes,
       restaurantId: ownProps.restaurantId

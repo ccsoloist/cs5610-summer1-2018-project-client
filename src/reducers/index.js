@@ -58,6 +58,14 @@ export const reducer = (state, action) => {
         dishes: action.dishes
       };
 
+    case constants.ADD_DISH_TO_ORDER:
+      console.log('in reducer');
+      console.log(action.items);
+
+      return {
+        items: action.items
+      };
+
     default: return state;
   }
 };

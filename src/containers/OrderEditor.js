@@ -1,37 +1,46 @@
 import React from 'react';
+import {connect} from "react-redux";
 
 
-export default class OrderEditor extends React.Component {
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      dishes: [
-        {id: 1, name: "pasta", price: 11.20, amount: 1},
-        {id: 2, name: "seafood boiler", price: 22.20, amount: 2},
-        {id: 3, name: "salad", price: 9.20, amount: 3}
-      ]
-    };
-  }
-
-  render() {
-    return (
-      <div>
+const OrderEditorContainer = () => {
+  return (
+    <div>
       <ul>
-        {this.state.dishes.map((dish) => {
-          return (
-            <li key={dish.id}>
-              {dish.name}
-              <button>+</button>
-              {dish.amount}
-              <button>-</button>
-            </li>
-          );
-        })}
+        {/*{this.props.dishes.map((dish) => {*/}
+          {/*return (*/}
+            {/*<li key={dish.id}>*/}
+              {/*{dish.name}*/}
+              {/*<button>+</button>*/}
+              {/*{dish.amount}*/}
+              {/*<button>-</button>*/}
+            {/*</li>*/}
+          {/*);*/}
+        {/*})}*/}
+        hello
       </ul>
       <button className="btn btn-primary">Place Order</button>
-      </div>
-    );
+    </div>
+  );
+} ;
+
+const dispatcherToPropsMapper = (dispatch) => ({
+
+});
+
+const stateToPropsMapper = (state, ownProps) => {
+  console.log('in order editor');
+  console.log(state);
+
+
+
+  if (state === undefined) {
+    return {
+      items: []
+    };
   }
-}
+};
+
+const OrderEditor = connect(stateToPropsMapper, dispatcherToPropsMapper)(OrderEditorContainer);
+
+export default OrderEditor;
