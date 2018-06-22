@@ -123,7 +123,7 @@ export default class Home
         </div>
 
 
-        
+
 
         <SearchBar action={this.updateRestaurants}/>
 
