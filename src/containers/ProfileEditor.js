@@ -55,7 +55,10 @@ class ProfileEditorContainer extends Component {
             <div className="col-8">
               <Switch className="container-fluid">
                 <Route path="/profile/:userType/:userId/account" >
-                  <AccountEditor user={this.state.user} userType={this.state.userType} userId={this.state.userId}/>
+                  <AccountEditor
+                    user={this.state.user}
+                    userType={this.state.userType}
+                    userId={this.state.userId}/>
                 </Route>
                 <Route path="/profile/:userType/:userId/orders" component={OrderList}/>
                 {/*<Route path="/profile/dishes" component={DishList}/>*/}

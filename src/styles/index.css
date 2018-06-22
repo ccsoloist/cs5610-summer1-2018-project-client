@@ -16,7 +16,10 @@ body {
 /*border-color: #dc3545;*/
 /*}*/
 
-
+.padded-button {
+    padding-top: 5%;
+    /*padding-bottom: 5%;*/
+}
 
 .wbdv-table-head {
     background: dodgerblue;
@@ -80,6 +83,13 @@ body {
 
 .account-editor-container {
     /*padding: 6% 10%;*/
+}
+
+.claim-restaurant-box {
+    background-color: lightskyblue;
+    box-shadow: inset 0 0 5px rgba(34, 126, 236, .8);
+    border-radius: 12px;
+    padding: 0 5%;
 }
 
 .order-list {

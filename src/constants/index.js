@@ -10,6 +10,7 @@ export const ALL_ORDERS_URL = SERVER + '/orders/TYPE/UID';
 
 export const USER_TYPE_CHANGED = 'USER_TYPE_CHANGED';
 export const LOGIN = 'LOGIN';
+export const CLAIM_RESTAURANT = 'CLAIM_RESTAURANT';
 
 export const CUSTOMER = 'customer';
 export const RESTAURATEUR = 'restaurateur';
