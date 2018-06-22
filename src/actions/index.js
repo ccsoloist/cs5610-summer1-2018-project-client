@@ -195,3 +195,15 @@ export const saveAllDishesForRestaurantId = (dispatch, restaurantId, dishes) => 
     restaurantId: restaurantId
   });
 };
+
+export const switchEdit = (dispatch, editMode, dishes, restaurantId) => {
+  console.log('in action');
+  console.log(editMode);
+
+  dispatch({
+    type: constants.SWITCH_EDIT_MODE,
+    editMode: !editMode,
+    dishes: dishes,
+    restaurantId: restaurantId
+  });
+};

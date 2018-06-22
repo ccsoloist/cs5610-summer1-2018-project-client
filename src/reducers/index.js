@@ -52,6 +52,13 @@ export const reducer = (state, action) => {
         dishes: action.dishes
       };
 
+    case constants.SWITCH_EDIT_MODE:
+      console.log(action.editMode);
+      return {
+        editMode: action.editMode,
+        restaurantId: action.restaurantId,
+        dishes: action.dishes
+      };
 
     default: return state;
   }
