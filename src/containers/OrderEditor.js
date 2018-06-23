@@ -32,7 +32,7 @@ const OrderEditorContainer = ({items, dishes, restaurantId, total,
           <div hidden={items.length === 0}>Total price: {total}</div>
           <button className="btn btn-primary float-right"
                   disabled={items.length === 0}
-                  onClick={() => placeOrder(dishes, restaurantId)}>Place Order
+                  onClick={() => placeOrder(restaurantId, items, total, dishes)}>Place Order
           </button>
         </div>
       </div>
@@ -45,8 +45,8 @@ const dispatcherToPropsMapper = (dispatch) => ({
     actions.increaseAmount(dispatch, selectedItem, dishes, restaurantId, items, total),
   decreaseAmount: (selectedItem, dishes, restaurantId, items, total) =>
     actions.decreaseAmount(dispatch, selectedItem, dishes, restaurantId, items, total),
-  placeOrder: (dishes, restaurantId) =>
-    actions.placeOrder(dispatch, dishes, restaurantId)
+  placeOrder: (restaurantId, items, total, dishes) =>
+    actions.placeOrder(dispatch, restaurantId, items, total, dishes)
 });
 
 const stateToPropsMapper = (state, ownProps) => {

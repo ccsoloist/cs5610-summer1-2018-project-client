@@ -1,6 +1,9 @@
 import * as constants from '../constants/index';
+import UserServiceClient from "./UserServiceClient";
 
 let _singleton = Symbol();
+
+const userService = UserServiceClient.instance();
 
 export default class OrderServiceClient {
   constructor(singletonToken) {
@@ -17,16 +20,27 @@ export default class OrderServiceClient {
   }
 
 
-  placeOrder(items, total, restaurantId) {
-    let restaurant;
+  createOrder(restaurantId, order) {
+    let restaurateurId;
 
-
-      let order = {
-        items: items,
-        total: total,
-        createdTime: new Date(),
-        delivered: false
-      };
+    return userService.findOwnerOfRestaurant(restaurantId)
+      .then(restaurateur => {
+        restaurateurId = restaurateur.id
+      })
+      .then(() => {
+        fetch(constants.SERVER + `/order/restaurateur/${restaurateurId}`, {
+          method: 'post',
+          body: JSON.stringify(order),
+          credentials: 'include',
+          headers: {
+            'content-type': 'application/json',
+          }
+        })
+          .then(response => {
+            if (response.status === 403) {
+              alert('please log in');
+            }
+          })
+      });
   }
-
 }

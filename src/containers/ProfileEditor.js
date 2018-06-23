@@ -62,7 +62,8 @@ class ProfileEditorContainer extends Component {
                     userId={this.state.userId}/>
                 </Route>
                 <Route path="/profile/:userType/:userId/orders" component={OrderList}/>
-                <Route path="/profile/:userType/:userId/dishes" component={DishList}/>
+                {this.state.userType === 'restaurateur' &&
+                <Route path="/profile/:userType/:userId/dishes" component={DishList}/>}
               </Switch>
             </div>
           </div>

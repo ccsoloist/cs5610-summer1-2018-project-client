@@ -19,7 +19,7 @@ class OrderWidgetContainer extends React.Component {
     return (
       <div className='row container-fluid form-group'>
         <div className='col-4'>
-          <h1>OrderEditor</h1>
+          <h1>Order Detail</h1>
           <OrderEditor dishes={this.props.dishes}
                        restaurantId={this.props.restaurantId}/>
         </div>

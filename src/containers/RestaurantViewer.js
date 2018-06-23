@@ -6,6 +6,9 @@ import DishServiceClient from "../services/DishServiceClient";
 import Menu from "./Menu";
 import OrderWidget from "../components/OrderWidget";
 import PlaceOrderWidget from "./PlaceOrderWidget";
+import Link from "react-router-dom/es/Link";
+import UserServiceClient from "../services/UserServiceClient";
+import FavoriteServiceClient from "../services/FavoriteServiceClient";
 
 export default class RestaurantViewer extends React.Component {
 
@@ -17,7 +20,10 @@ export default class RestaurantViewer extends React.Component {
       restaurant: {},
     };
 
+    this.logout = this.logout.bind(this);
     this.restaurantService = RestaurantServiceClient.instance();
+    this.userService = UserServiceClient.instance();
+    this.favoriteService = FavoriteServiceClient.instance();
   }
 
   componentDidMount() {
@@ -41,7 +47,6 @@ export default class RestaurantViewer extends React.Component {
     });
   }
 
-
   componentWillReceiveProps(newProps) {
     this.setState({yelpId: newProps.match.params.yelpId});
 
@@ -62,6 +67,10 @@ export default class RestaurantViewer extends React.Component {
     });
   }
 
+  likes(restaurantId) {
+    this.favoriteService.customerLikesRestaurant(restaurantId);
+  }
+
   // componentDidMount() {
   //   let restaurantId = this.props.match.params.restaurantId;
   //
@@ -77,6 +86,10 @@ export default class RestaurantViewer extends React.Component {
   //   this.restaurantService.findRestaurantById(restaurantId)
   //     .then(restaurant => this.setState({restaurant: restaurant}));
   // }
+
+  logout() {
+    this.userService.logout();
+  }
 
   render() {
     return (
@@ -100,7 +113,8 @@ export default class RestaurantViewer extends React.Component {
           <div className="col-3 text-center">
             <i className="fa fa-user"></i>
             <span>Welcome, username!</span>
-            <a href="#">Logout</a>
+            <Link to="/"
+            onClick={() => this.logout()}>Logout</Link>
             <i className="fa fa-sign-out col-1"></i>
           </div>
         </div>
@@ -114,7 +128,7 @@ export default class RestaurantViewer extends React.Component {
             <div className="row">
               <h1>{this.state.restaurant.name}
                 {this.state.restaurant.id !== 0 && <i className="fa fa-heart-o col-2 text-right"
-                   onClick={() => alert('love love')}></i>}
+                   onClick={() => this.likes(this.state.restaurant.id)}></i>}
               </h1>
             </div>
             <h3>Address: {this.state.restaurant.address}</h3>

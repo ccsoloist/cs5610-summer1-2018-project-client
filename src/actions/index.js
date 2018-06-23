@@ -2,10 +2,12 @@ import * as constants from '../constants'
 import UserServiceClient from "../services/UserServiceClient";
 import RestaurantServiceClient from "../services/RestaurantServiceClient";
 import DishServiceClient from "../services/DishServiceClient";
+import OrderServiceClient from "../services/OrderServiceClient";
 
 const userService = UserServiceClient.instance();
 const dishService = DishServiceClient.instance();
 const restaurantService = RestaurantServiceClient.instance();
+const orderService = OrderServiceClient.instance();
 
 export const claimRestaurant = (dispatch, userType, claimed, phone) => {
   restaurantService.claimRestaurantByPhone(phone)
@@ -150,8 +152,6 @@ export const Register =
 
 export const deleteDish = (dispatch, dishId, dishes, restaurantId) => {
   dishService.deleteDishForRestaurant(restaurantId, dishId);
-
-  console.log(dishes);
   let newDishes = dishes.filter((dish) => (dish.id !== dishId));
 
   dispatch({
@@ -333,9 +333,21 @@ export const decreaseAmount = (dispatch, selectedItem, dishes, restaurantId, ite
   });
 };
 
-export const placeOrder = (dispatch, dishes, restaurantId) => {
+export const placeOrder = (dispatch, restaurantId, items, total, dishes) => {
+
+  // restaurantId, order
+
+  let order = {
+    total: total,
+    items: items,
+    createdTime: new Date(),
+    delivered: false
+  };
+
+  orderService.createOrder(restaurantId, order);
+
   dispatch({
-    type: constants.PLACE_ORDER,
+    type: constants.DECREASE_AMOUNT,
     dishes: dishes,
     restaurantId: restaurantId,
     items: [],
