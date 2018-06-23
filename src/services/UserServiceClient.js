@@ -74,8 +74,28 @@ export default class UserServiceClient {
     }
   }
 
+  findOrdersForUser(userId) {
+    return fetch(constants.SERVER + '/user/' + userId + '/orders')
+      .then(response => response.json());
+  }
+
   findAccountInfoForUser(userType, userId) {
-    return fetch('http://localhost:8080/api/profile/' + userType + '/' + userId + '/account')
+    return fetch(constants.SERVER + '/profile/' + userType + '/' + userId + '/account')
       .then(response => (response.json()));
+  }
+
+  findDishesForRestaurateur(restaurateurId) {
+    return fetch(constants.SERVER + '/order/' + restaurateurId)
+      .then(response => response.json());
+  }
+
+  updateAccountInfoForUser(userType, userId, user) {
+    return fetch(constants.SERVER + '/profile/' + userType + '/' + userId + '/account', {
+      method: 'put',
+      body: JSON.stringify(user),
+      headers: {
+        'content-type': 'application/json'
+      }
+    }).then(response => response.json());
   }
 }

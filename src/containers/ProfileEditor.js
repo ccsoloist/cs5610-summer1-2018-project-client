@@ -28,9 +28,6 @@ class ProfileEditorContainer extends Component {
   }
 
   componentDidMount() {
-    // this.setState({userType:this.props.match.params.userType,
-    // userId: this.props.match.params.userId});
-
     var address = window.location.pathname.split('/profile/')[1].split('/');
     let userType = address[0];
     let userId = address[1];
@@ -38,10 +35,16 @@ class ProfileEditorContainer extends Component {
 
     this.userService.findAccountInfoForUser(userType, userId)
       .then(user => this.setState({user: user}));
+  }
 
-    // fetch('http://localhost:8080/api/profile/'+userType+'/'+userId+'/account')
-    //   .then(response=>(response.json()))
-    //   .then(user=>{this.setState({user: user})});
+  componentWillReceiveProps(newProps) {
+    var address = window.location.pathname.split('/profile/')[1].split('/');
+    let userType = address[0];
+    let userId = address[1];
+    this.setState({userType: userType, userId: userId});
+
+    this.userService.findAccountInfoForUser(userType, userId)
+      .then(user => this.setState({user: user}));
   }
 
   render() {
@@ -54,12 +57,7 @@ class ProfileEditorContainer extends Component {
             </div>
             <div className="col-8">
               <Switch className="container-fluid">
-                <Route path="/profile/:userType/:userId/account" >
-                  <AccountEditor
-                    user={this.state.user}
-                    userType={this.state.userType}
-                    userId={this.state.userId}/>
-                </Route>
+                <Route path="/profile/:userType/:userId/account" component={AccountEditor}/>
                 <Route path="/profile/:userType/:userId/orders" component={OrderList}/>
                 {/*<Route path="/profile/dishes" component={DishList}/>*/}
               </Switch>
@@ -69,14 +67,19 @@ class ProfileEditorContainer extends Component {
       </Router>
     )
   }
-};
+}
 
-// const stateToPropsMapper = state => (state);
+const stateToPropsMapper = (state, ownProps) => {
+  if (state !== undefined) {
+    return state;
+  }
+  return ownProps;
+};
 
 const dispatcherToPropsMapper = dispatch => ({});
 
 const ProfileEditorConnected = connect(
-  // stateToPropsMapper,
+  stateToPropsMapper,
   dispatcherToPropsMapper)
 (ProfileEditorContainer);
 

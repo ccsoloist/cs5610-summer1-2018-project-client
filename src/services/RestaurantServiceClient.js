@@ -41,6 +41,7 @@ export default class RestaurantServiceClient {
         if (response.status === 404) {
           return false;
         } else {
+          alert("This restaurant has been claimed :(");
           return response.json();
         }
       });
@@ -50,19 +51,15 @@ export default class RestaurantServiceClient {
     return this.yelpServiceClient.findRestaurantByPhone(phone)
       .then(response => {
         if (response === false) {
+          alert('Can\'t find this restaurant on Yelp :(');
           return false;
-        } else {
-          //find in local
+        } else { //find in local
           let yelpId = response[0].yelpId;
           return this.findRestaurantByYelpId(yelpId)
             .then(found => {
-              if (found === false) {
-                // store restaurant in local
+              if (found === false) { // store restaurant in local
                 return this.createRestaurant(yelpId)
-                  .then(restaurant => {
-                    console.log(restaurant.id);
-                    return restaurant.id
-                  });
+                  .then(restaurant => restaurant.id);
               } else {
                 return this.findRestaurateurForRestaurantBool(yelpId)
                   .then(hasRestaurateur => hasRestaurateur ? false : found.id);
@@ -90,7 +87,7 @@ export default class RestaurantServiceClient {
   findRestaurantById(restaurantId) {
     return fetch(constants.SERVER + `/restaurant/${restaurantId}`)
       .then(response => {
-        if (response.status == 404) {
+        if (response.status === 404) {
           return null;
         }
         else {

@@ -1,53 +1,48 @@
 import React, {Component} from 'react'
 import * as constants from '../constants'
-import {Provider, connect} from 'react-redux'
-import {createStore} from 'redux'
-import {reducer} from '../reducers'
-import {Link} from 'react-router-dom'
-import * as actions from '../actions'
 import '../styles/index.css'
 import OrderWidget from "../components/OrderWidget";
+import UserServiceClient from "../services/UserServiceClient";
 
-const OrderListContainer = ({}) => {
-  return (
-    <div className="order-list-container">
-      <div className="order-list">
-        <h1>Order List</h1>
-        <table className="table">
-          <thead>
-          <tr>
-            <th></th>
-            <th>Restaurant name</th>
-            <th>$</th>
-            <th>Finished</th>
-          </tr>
-          </thead>
-          <tbody>
-            <OrderWidget/>
-          </tbody>
-        </table>
+export default class OrderList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      orders: [],
+      userType: this.props.match.params.userType
+    };
 
+    this.findOrdersForUser = this.findOrdersForUser.bind(this);
+    this.userServiceClient = UserServiceClient.instance();
+  }
+
+  componentDidMount() {
+    this.findOrdersForUser(this.props.match.params.userId);
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.findOrdersForUser(newProps.match.params.userId);
+}
+
+  findOrdersForUser(userId) {
+    this.userServiceClient.findOrdersForUser(userId)
+      .then(orders => this.setState({orders: orders}));
+  }
+
+  render() {
+    return (
+      <div className="order-list-container">
+        <div className="order-list">
+          {/*<h1>Order List</h1>*/}
+          <ul>
+            {this.state.orders.map(order => (
+              <OrderWidget userType={this.state.userType}
+                           key={order.id}
+                           order={order}/>
+            ))}
+          </ul>
+        </div>
       </div>
-    </div>
-
-  )
-};
-
-// const stateToPropsMapper = state => (state);
-
-const dispatcherToPropsMapper = dispatch => ({});
-
-const OrderListConnected = connect(
-  // stateToPropsMapper,
-  dispatcherToPropsMapper)
-(OrderListContainer);
-
-const store = createStore(reducer);
-
-const OrderList = state => (
-  <Provider store={store}>
-    <OrderListConnected/>
-  </Provider>
-);
-
-export default OrderList;
+    )
+  }
+}

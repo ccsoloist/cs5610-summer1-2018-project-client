@@ -16,6 +16,6 @@ import {Provider} from "react-redux";
 
 
 ReactDOM.render(
-  <DishList restaurantId={1}/>,
+  <App/>,
   document.getElementById('root')
 );

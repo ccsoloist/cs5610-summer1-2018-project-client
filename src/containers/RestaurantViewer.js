@@ -92,14 +92,14 @@ export default class RestaurantViewer extends React.Component {
                  onChange={this.locationChanged}/>
           <button className="btn btn-primary"
                   onClick={this.findRestaurantsByCriteria}>
-            <i className="fa fa-search"></i>
+            <i className="fa fa-search"/>
           </button>
 
           <div className="col-3 text-center">
-            <i className="fa fa-user"></i>
+            <i className="fa fa-user"/>
             <span>Welcome, username!</span>
             <a href="#">Logout</a>
-            <i className="fa fa-sign-out col-1"></i>
+            <i className="fa fa-sign-out col-1"/>
           </div>
         </div>
 
@@ -112,7 +112,7 @@ export default class RestaurantViewer extends React.Component {
             <div className="row">
               <h1>{this.state.restaurant.name}
                 <i className="fa fa-heart-o col-2 text-right"
-                   onClick={() => alert('love love')}></i>
+                   onClick={() => alert('love love')}/>
               </h1>
             </div>
             <h3>Address: {this.state.restaurant.address}</h3>

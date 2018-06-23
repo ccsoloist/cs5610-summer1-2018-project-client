@@ -2,10 +2,12 @@ import * as constants from '../constants'
 import UserServiceClient from "../services/UserServiceClient";
 import RestaurantServiceClient from "../services/RestaurantServiceClient";
 import DishServiceClient from "../services/DishServiceClient";
+import OrderServiceClient from "../services/OderServiceClient";
 
 const userService = UserServiceClient.instance();
 const dishService = DishServiceClient.instance();
 const restaurantService = RestaurantServiceClient.instance();
+const orderService = OrderServiceClient.instance();
 
 export const claimRestaurant = (dispatch, userType, claimed, phone) => {
   restaurantService.claimRestaurantByPhone(phone)
@@ -216,6 +218,13 @@ export const switchEdit = (dispatch, selectedDishId, editMode, dishes, restauran
     dishes: dishes,
     restaurantId: restaurantId
   });
+};
+
+export const finishOrder = (dispatch, orderId) => {
+  orderService.finishOrder(orderId)
+    .then(() => dispatch({
+      type: constants.FINISH_ORDER
+    }));
 };
 
 export const updateDish = (dispatch, editMode, dishes, restaurantId, dish, name, price) => {

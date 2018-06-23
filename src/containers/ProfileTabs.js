@@ -1,12 +1,9 @@
 import React, {Component} from 'react'
 import * as constants from '../constants'
-import {Provider, connect} from 'react-redux'
-import {createStore} from 'redux'
-import {reducer} from '../reducers'
+import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import * as actions from '../actions'
 import '../styles/index.css'
-// import ProfileTabItem from "../components/ProfileTabItem"
 
 const ProfileTabsContainer = ({userId, userType}) => {
   return (
@@ -24,7 +21,7 @@ const ProfileTabsContainer = ({userId, userType}) => {
               Recent Orders</Link>
           </li>
         </div>
-        <div className="row">
+        <div className="row" hidden={userType !== constants.RESTAURATEUR}>
           <li className="list-group-item form-control">
             {/*<Link to={`/profile/${userType}/${userId}/dishes`}>*/}
             <Link to={`/profile/dishes`}>
@@ -45,18 +42,9 @@ const stateToPropsMapper = (state, ownProps) => {
 
 const dispatcherToPropsMapper = dispatch => ({});
 
-const ProfileTabsConnected = connect(
+const ProfileTabs = connect(
   stateToPropsMapper,
   dispatcherToPropsMapper)
 (ProfileTabsContainer);
 
-export default ProfileTabsConnected;
-// const store = createStore(reducer);
-
-// const ProfileTabs = state => (
-//   <Provider store={store}>
-//     <ProfileTabsConnected/>
-//   </Provider>
-// );
-
-// export default ProfileTabs;
+export default ProfileTabs;

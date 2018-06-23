@@ -63,13 +63,13 @@ const RegisterFormContainer = (
                  hidden={userType !== constants.RESTAURATEUR}>
               <label>Restaurant Name</label>
               <input type="text"
-                         className="form-control"
-                         placeholder="Restaurant Name"
-                         ref={node => input_rn = node} required/>
+                     className="form-control"
+                     placeholder="Restaurant Name"
+                     ref={node => input_rn = node} required/>
             </div>
 
 
-              <div className="form-group row"
+            <div className="form-group row"
                  hidden={userType === constants.RESTAURATEUR}>
               <div className="col">
                 <label>First Name</label>
@@ -106,7 +106,7 @@ const RegisterFormContainer = (
                  hidden={userType !== constants.RESTAURATEUR}>
               <span>&nbsp;</span>
               <div className="form-group">
-                <label>Claim by phone 14159083801</label>
+                <label>Claim Restaurant by 16177423474!</label>
                 <input type="text"
                        className="form-control"
                        placeholder="Enter Phone"
@@ -115,10 +115,12 @@ const RegisterFormContainer = (
 
               <div className="form-group">
                 <div className="col-12">
-                  {/*<span>&nbsp;</span>*/}
                   <button type="button"
-                          onClick={() => claimRestaurant(
-                            userType, claimed, input_rph.value)}
+                          onClick={() => {
+                            if (input_rph.value !== '') {
+                              claimRestaurant(userType, claimed, input_rph.value)
+                            }
+                          }}
                           className="form-control btn btn-success">
                     Claim!
                   </button>

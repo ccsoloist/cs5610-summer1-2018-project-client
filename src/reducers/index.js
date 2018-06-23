@@ -65,6 +65,11 @@ export const reducer = (state, action) => {
         dishes: action.dishes
       };
 
+    case constants.FINISH_ORDER:
+      return {
+        state
+      };
+
     default: return state;
   }
 };
