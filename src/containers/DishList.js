@@ -13,7 +13,6 @@ class DishListContainer extends React.Component {
     super(props);
 
     this.props.findAllDishesByOwner(this.props.restaurateurId);
-    // this.props.findAllDishesForRestaurant(this.props.restaurantId);
   }
 
   // componentDidMount() {

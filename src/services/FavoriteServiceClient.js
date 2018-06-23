@@ -25,10 +25,53 @@ export default class FavoriteServiceClient {
       .then(response => {
         if (response.status === 403) {
           alert('please log in!');
+          return false;
         }
-        if (response.status === 409) {
+        else if (response.status === 404) {
           alert('an error occurs!');
+          return false;
+        }
+        else {
+          return true;
         }
       })
+  }
+
+  findFavorite(restaurantId) {
+    return fetch(constants.SERVER + `/favorite/${restaurantId}`, {
+      method: 'get',
+      credentials: 'include'
+    })
+      .then(response => {
+        if (response.status !== 404) {
+          return true;
+        }
+        return false;
+      })
+  }
+
+  customerUnlikesRestaurant(restaurantId) {
+    return fetch(constants.SERVER + `/favorite/${restaurantId}`, {
+      method: 'delete',
+      credentials: 'include'
+    })
+      .then(response => {
+        if (response.status === 403) {
+          alert('please log in!');
+          return false;
+        }
+        else if (response.status === 404) {
+          alert('an error occurs!');
+          return true;
+        }
+        else {
+          return false;
+        }
+      })
+  }
+
+  findFavoritesForUser(userId) {
+    return fetch(constants.SERVER + `/favorite/user/${userId}`)
+      .then(response => response.json());
   }
 }

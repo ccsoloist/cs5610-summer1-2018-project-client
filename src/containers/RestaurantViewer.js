@@ -18,6 +18,8 @@ export default class RestaurantViewer extends React.Component {
     this.state = {
       yelpId: this.props.match.params.yelpId,
       restaurant: {},
+      isLiked: false,
+      user: {}
     };
 
     this.logout = this.logout.bind(this);
@@ -44,7 +46,19 @@ export default class RestaurantViewer extends React.Component {
 
     response.then((restaurant) => {
       this.setState({restaurant: restaurant});
-    });
+
+      if (restaurant.id !== 0) {
+        this.favoriteService.findFavorite(restaurant.id)
+          .then(response => {
+            if (response) {
+              this.setState({isLiked: true})
+            }
+            else {
+              this.setState({isLiked: false})
+            }
+          });
+      }
+    })
   }
 
   componentWillReceiveProps(newProps) {
@@ -64,11 +78,33 @@ export default class RestaurantViewer extends React.Component {
 
     response.then((restaurant) => {
       this.setState({restaurant: restaurant});
-    });
+
+      if (restaurant.id !== 0) {
+        this.favoriteService.findFavorite(restaurant.id)
+          .then(response => {
+            if (response) {
+              this.setState({isLiked: true})
+            }
+            else {
+              this.setState({isLiked: false})
+            }
+          });
+      }
+    })
   }
 
-  likes(restaurantId) {
-    this.favoriteService.customerLikesRestaurant(restaurantId);
+  like(restaurantId) {
+    this.favoriteService.customerLikesRestaurant(restaurantId)
+      .then((response) => {
+        this.setState({isLiked: response})
+      });
+  }
+
+  unlike(restaurantId) {
+    this.favoriteService.customerUnlikesRestaurant(restaurantId)
+      .then((response) => {
+        this.setState({isLiked: response})
+      })
   }
 
   // componentDidMount() {
@@ -114,7 +150,7 @@ export default class RestaurantViewer extends React.Component {
             <i className="fa fa-user"></i>
             <span>Welcome, username!</span>
             <Link to="/"
-            onClick={() => this.logout()}>Logout</Link>
+                  onClick={() => this.logout()}>Logout</Link>
             <i className="fa fa-sign-out col-1"></i>
           </div>
         </div>
@@ -127,8 +163,12 @@ export default class RestaurantViewer extends React.Component {
           <div className="col-8">
             <div className="row">
               <h1>{this.state.restaurant.name}
-                {this.state.restaurant.id !== 0 && <i className="fa fa-heart-o col-2 text-right"
-                   onClick={() => this.likes(this.state.restaurant.id)}></i>}
+                {(this.state.restaurant.id !== 0 && !this.state.isLiked)
+                && <i className="fa fa-heart-o col-2 text-right"
+                      onClick={() => this.like(this.state.restaurant.id)}></i>}
+                {(this.state.restaurant.id !== 0 && this.state.isLiked)
+                && <i className="fa fa-heart col-2 text-right"
+                      onClick={() => this.unlike(this.state.restaurant.id)}></i>}
               </h1>
             </div>
             <h3>Address: {this.state.restaurant.address}</h3>
@@ -136,7 +176,6 @@ export default class RestaurantViewer extends React.Component {
             <h3>{this.state.restaurant.category} Rating:{this.state.restaurant.rating}</h3>
           </div>
         </div>
-
 
         {(this.state.restaurant.id !== undefined && this.state.restaurant.id !== 0)
         && <PlaceOrderWidget restaurantId={this.state.restaurant.id}/>}

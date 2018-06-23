@@ -100,4 +100,12 @@ export default class UserServiceClient {
       credentials: 'include'
     });
   }
+
+  findCurrentUser() {
+    return fetch(constants.SERVER + '/session/user', {
+      method: 'get',
+      credentials: 'include'
+    })
+      .then(response => response.json);
+  }
 }

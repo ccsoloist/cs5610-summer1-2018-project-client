@@ -334,9 +334,6 @@ export const decreaseAmount = (dispatch, selectedItem, dishes, restaurantId, ite
 };
 
 export const placeOrder = (dispatch, restaurantId, items, total, dishes) => {
-
-  // restaurantId, order
-
   let order = {
     total: total,
     items: items,
