@@ -20,8 +20,9 @@ export default class UserServiceClient {
     return fetch(constants.LOGIN_URL.replace('TYPE', userType), {
       method: 'put',
       body: JSON.stringify(user),
+      credentials: 'include',
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
       }
     })
       .then(response => {
@@ -40,6 +41,7 @@ export default class UserServiceClient {
       return fetch(constants.REGISTER_URL.replace('TYPE', userType) + "/" + user.restaurantId, {
         method: 'post',
         body: JSON.stringify(user),
+        credentials: 'include',
         headers: {
           'content-type': 'application/json'
         }
@@ -57,6 +59,7 @@ export default class UserServiceClient {
       return fetch(constants.REGISTER_URL.replace('TYPE', userType), {
         method: 'post',
         body: JSON.stringify(user),
+        credentials: 'include',
         headers: {
           'content-type': 'application/json'
         }
@@ -80,8 +83,35 @@ export default class UserServiceClient {
   }
 
   findAccountInfoForUser(userType, userId) {
-    return fetch(constants.SERVER + '/profile/' + userType + '/' + userId + '/account')
+    return fetch(constants.SERVER + '/profile/' + userType + '/' + userId + '/account', {
+        credentials: 'include'
+    })
       .then(response => (response.json()));
+  }
+
+  findOwnerOfRestaurant(restaurantId) {
+    return fetch(constants.SERVER + `/user/restaurant/${restaurantId}`)
+      .then(response => {
+        if (response.status !== 404) {
+          return response.json();
+        }
+        return null;
+      });
+  }
+
+  logout() {
+    return fetch(constants.SERVER + '/logout', {
+      method: 'post',
+      credentials: 'include'
+    });
+  }
+
+  findCurrentUser() {
+    return fetch(constants.SERVER + '/session/user', {
+      method: 'get',
+      credentials: 'include'
+    })
+      .then(response => response.json);
   }
 
   findDishesForRestaurateur(restaurateurId) {

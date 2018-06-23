@@ -2,7 +2,7 @@ import * as constants from '../constants'
 import UserServiceClient from "../services/UserServiceClient";
 import RestaurantServiceClient from "../services/RestaurantServiceClient";
 import DishServiceClient from "../services/DishServiceClient";
-import OrderServiceClient from "../services/OderServiceClient";
+import OrderServiceClient from "../services/OrderServiceClient";
 
 const userService = UserServiceClient.instance();
 const dishService = DishServiceClient.instance();
@@ -150,24 +150,14 @@ export const Register =
       });
   };
 
-export const deleteDish = (dispatch, dishId, position, dishes, restaurantId) => {
-  // if (dishId !== 0) {
-  //   dishService.deleteDishForRestaurant(restaurantId, dishId);
-  // }
+export const deleteDish = (dispatch, dishId, dishes, restaurantId) => {
   dishService.deleteDishForRestaurant(restaurantId, dishId);
-
   let newDishes = dishes.filter((dish) => (dish.id !== dishId));
-  if (position !== dishes.length) {
-    newDishes.map((dish) => {
-      if (dish.position > position) {
-        dish.position--;
-      }
-    });
-  }
 
   dispatch({
     type: constants.DELETE_DISH,
-    dishes: newDishes
+    dishes: newDishes,
+    restaurantId: restaurantId
   });
 };
 
@@ -176,7 +166,6 @@ export const addDish = (dispatch, dishName, dishPrice, dishes, restaurantId) => 
     id: 0,
     name: dishName,
     price: dishPrice,
-    position: dishes.length + 1
   };
   dishService.createDishForRestaurant(restaurantId, dish)
     .then(() => {
@@ -184,11 +173,29 @@ export const addDish = (dispatch, dishName, dishPrice, dishes, restaurantId) => 
         .then((dishes) => {
           dispatch({
             type: constants.ADD_DISH,
-            dishes: dishes
+            dishes: dishes,
+            restaurantId: restaurantId
           });
         });
     });
 };
+
+export const findAllDishesByOwner = (dispatch, restaurateurId) => {
+  restaurantService.findRestaurantByOwner(restaurateurId)
+    .then(restaurant => {
+      console.log('in action');
+      console.log(restaurateurId);
+      console.log(restaurant.id);
+      dishService.findAllDishesForRestaurant(restaurant.id)
+        .then(dishes => {
+          dispatch({
+            type: constants.FIND_ALL_DISHES_BY_OWNER,
+            dishes: dishes,
+            restaurantId: restaurant.id
+          })
+        })
+    })
+}
 
 export const findAllDishesForRestaurant = (dispatch, restaurantId) => {
   dishService.findAllDishesForRestaurant(restaurantId)
@@ -232,11 +239,10 @@ export const updateDish = (dispatch, editMode, dishes, restaurantId, dish, name,
   let newDish = {
     id: dishId,
     name: name,
-    price: price,
-    position: dish.position
+    price: price
   };
 
-  dishService.updateDish(dishId, newDish);
+  dishService.updateDish(restaurantId, dishId, newDish);
 
   let newDishes = dishes.map(dish => {
     if (dish.id === dishId) {
@@ -253,4 +259,102 @@ export const updateDish = (dispatch, editMode, dishes, restaurantId, dish, name,
     editMode: !editMode,
     restaurantId: restaurantId
   });
+};
+
+export const addDishToOrder = (dispatch, dish, dishes, restaurantId, items, total) => {
+  let found = false;
+  let newItems = items.map(item => {
+    if (item.dish === dish) {
+      found = true;
+      return {dish: item.dish, amount: item.amount + 1};
+    }
+    else {
+      return item;
+    }
+  });
+
+  if (!found) {
+    newItems = [
+      ...newItems,
+      {dish: dish, amount: 1}
+    ]
+  }
+
+  dispatch({
+    type: constants.ADD_DISH_TO_ORDER,
+    dishes: dishes,
+    restaurantId: restaurantId,
+    items: newItems,
+    total: total + dish.price
+  });
+};
+
+
+export const increaseAmount = (dispatch, selectedItem, dishes, restaurantId, items, total) => {
+  items = items.map(item => {
+    if (item === selectedItem) {
+      return {dish: item.dish, amount: item.amount + 1}
+    }
+    else {
+      return item;
+    }
+  });
+
+  dispatch({
+    type: constants.INCREASE_AMOUNT,
+    dishes: dishes,
+    restaurantId: restaurantId,
+    items: items,
+    total: total + selectedItem.dish.price
+  })
+};
+
+export const decreaseAmount = (dispatch, selectedItem, dishes, restaurantId, items, total) => {
+  let remove = false;
+
+  items = items.map(item => {
+    if (item === selectedItem) {
+      if (item.amount === 1) {
+        remove = true;
+        return item;
+      }
+      else {
+        return {dish: item.dish, amount: item.amount - 1}
+      }
+    }
+    else {
+      return item;
+    }
+  });
+
+  if (remove) {
+    items = items.filter((item) => (item !== selectedItem));
+  }
+
+  dispatch({
+    type: constants.DECREASE_AMOUNT,
+    dishes: dishes,
+    restaurantId: restaurantId,
+    items: items,
+    total: total - selectedItem.dish.price
+  });
+};
+
+export const placeOrder = (dispatch, restaurantId, items, total, dishes) => {
+  let order = {
+    total: total,
+    items: items,
+    createdTime: new Date(),
+    delivered: false
+  };
+
+  orderService.createOrder(restaurantId, order);
+
+  dispatch({
+    type: constants.DECREASE_AMOUNT,
+    dishes: dishes,
+    restaurantId: restaurantId,
+    items: [],
+    total: 0
+  })
 };

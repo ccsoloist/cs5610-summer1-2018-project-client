@@ -4,6 +4,7 @@ import {reducer} from "../reducers";
 import {createStore} from "redux";
 import {connect, Provider} from "react-redux";
 import * as actions from "../actions/index";
+import RestaurantServiceClient from "../services/RestaurantServiceClient";
 
 
 class DishListContainer extends React.Component {
@@ -11,7 +12,7 @@ class DishListContainer extends React.Component {
   constructor(props) {
     super(props);
 
-    this.props.findAllDishesForRestaurant(this.props.restaurantId);
+    this.props.findAllDishesByOwner(this.props.restaurateurId);
   }
 
   // componentDidMount() {
@@ -27,8 +28,6 @@ class DishListContainer extends React.Component {
   render() {
     let nameElement;
     let priceElement;
-
-    console.log(this.props.dishes);
 
     return (
       <div className="container-fluid">
@@ -69,19 +68,16 @@ class DishListContainer extends React.Component {
           })}
           </tbody>
         </table>
-
       </div>
     )
   }
-};
+}
 
 const stateToPropsMapper = (state, ownProps) => {
   if (state !== undefined) {
-    console.log('in dish list');
-    console.log(state.dishes);
     return {
       dishes: state.dishes,
-      restaurantId: ownProps.restaurantId
+      restaurantId: state.restaurantId
     }
   }
   if (ownProps !== undefined) {
@@ -93,14 +89,12 @@ const stateToPropsMapper = (state, ownProps) => {
 };
 
 const dispatcherToPropsMapper = (dispatch) => ({
-  deleteDish: (dishId, position, dishes, restaurantId) =>
-    actions.deleteDish(dispatch, dishId, position, dishes, restaurantId),
   addDish: (dishName, dishPrice, dishes, restaurantId) =>
     actions.addDish(dispatch, dishName, dishPrice, dishes, restaurantId),
   findAllDishesForRestaurant: (restaurantId) =>
     actions.findAllDishesForRestaurant(dispatch, restaurantId),
-  saveAllDishesForRestaurant: (restaurantId, dishes) =>
-    actions.saveAllDishesForRestaurantId(dispatch, restaurantId, dishes)
+  findAllDishesByOwner: (restaurateurId) =>
+    actions.findAllDishesByOwner(dispatch, restaurateurId)
 });
 
 const DishListConnected =
@@ -110,12 +104,23 @@ const DishListConnected =
 
 const store = createStore(reducer);
 
-const DishList = state => {
-  return (
-    <Provider store={store}>
-      <DishListConnected restaurantId={state.restaurantId}/>
-    </Provider>
-  );
-};
+
+class DishList extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      restaurateurId: this.props.match.params.userId,
+    };
+  }
+
+  render() {
+    return (
+      <Provider store={store}>
+        <DishListConnected restaurateurId={this.state.restaurateurId}/>
+      </Provider>
+    );
+  }
+}
 
 export default DishList;

@@ -75,7 +75,7 @@ export default class Home
         }
         else {
           // window.location.replace(`restaurant/${restaurant.id}`);
-          this.props.history.push(`restaurant/${restaurant.id}`);
+          this.props.history.push(`restaurant/${yelpId}`);
         }
       })
   }
@@ -112,11 +112,7 @@ export default class Home
             );
           })}
         </div>
-
       </div>
     );
   }
 }
-
-
-

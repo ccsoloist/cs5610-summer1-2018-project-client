@@ -5,18 +5,18 @@ import {createStore} from 'redux'
 import {reducer} from '../reducers'
 import * as actions from '../actions'
 
-const DishListItemComponent = ({dish, deleteDish, dishes, restaurantId,
-                                 editMode, switchEdit, selectedDishId, updateDish}) => {
+const DishListItemComponent = ({dish,  dishes, restaurantId, editMode,
+                                 deleteDish, switchEdit, selectedDishId, updateDish}) => {
   let nameElement;
   let priceElement;
 
   return (
-    <tr>
+  <tr>
       {(!editMode || selectedDishId !== dish.id) && <td className="text-center">{dish.name}</td>}
       {(!editMode || selectedDishId !== dish.id) && <td className="text-center">{dish.price}</td>}
       {(!editMode || selectedDishId !== dish.id) && <td className="text-center">
         <button className="btn btn-primary"
-                onClick={() => deleteDish(dish.id, dish.position, dishes, restaurantId)}>
+                onClick={() => deleteDish(dish.id, dishes, restaurantId)}>
           Remove Dish
         </button>
         <button className="btn btn-primary"
@@ -48,8 +48,8 @@ const DishListItemComponent = ({dish, deleteDish, dishes, restaurantId,
 
 
 const dispatcherToPropsMapper = (dispatch) => ({
-  deleteDish: (dishId, position, dishes, restaurantId) =>
-    actions.deleteDish(dispatch, dishId, position, dishes, restaurantId),
+  deleteDish: (dishId, dishes, restaurantId) =>
+    actions.deleteDish(dispatch, dishId, dishes, restaurantId),
   switchEdit: (selectedDishId, editMode, dishes, restaurantId) =>
     actions.switchEdit(dispatch, selectedDishId, editMode, dishes, restaurantId),
   updateDish: (editMode, dishes, restaurantId, dish, name, price) =>

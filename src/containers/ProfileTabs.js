@@ -23,8 +23,7 @@ const ProfileTabsContainer = ({userId, userType}) => {
         </div>
         <div className="row" hidden={userType !== constants.RESTAURATEUR}>
           <li className="list-group-item form-control">
-            {/*<Link to={`/profile/${userType}/${userId}/dishes`}>*/}
-            <Link to={`/profile/dishes`}>
+            <Link to={`/profile/${userType}/${userId}/dishes`}>
               Edit Dishes</Link>
           </li>
         </div>
