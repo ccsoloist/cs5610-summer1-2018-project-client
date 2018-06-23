@@ -25,36 +25,14 @@ export const reducer = (state, action) => {
       };
 
     case constants.DELETE_DISH:
-      let dishes = action.dishes.map((dish) => {
-        return Object.assign({}, dish);
-      });
-      return {dishes: dishes};
-
-       // return {
-       //   dishes: action.dishes
-       // };
-
     case constants.ADD_DISH:
-      return {
-        dishes: action.dishes
-      };
-
+    case constants.FIND_ALL_DISHES_BY_OWNER:
     case constants.FIND_ALL_DISHES_FOR_RESTAURANT:
-      return {
-        restaurantId: action.restaurantId,
-        dishes: action.dishes
-      };
-
     case constants.SAVE_ALL_DISHES_FOR_RESTAURANT:
-      return {
-        restaurantId: action.restaurantId,
-        dishes: action.dishes
-      };
-
     case constants.UPDATE_DISH:
       return {
-        restaurantId: action.restaurantId,
-        dishes: action.dishes
+        dishes: action.dishes,
+        restaurantId: action.restaurantId
       };
 
     case constants.SWITCH_EDIT_MODE:
@@ -66,11 +44,16 @@ export const reducer = (state, action) => {
       };
 
     case constants.ADD_DISH_TO_ORDER:
+    case constants.INCREASE_AMOUNT:
+    case constants.DECREASE_AMOUNT:
+    case constants.PLACE_ORDER:
       console.log('in reducer');
       console.log(action.items);
-
       return {
-        items: action.items
+        items: action.items,
+        total: action.total,
+        restaurantId: action.restaurantId,
+        dishes: action.dishes,
       };
 
     default: return state;

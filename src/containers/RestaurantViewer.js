@@ -11,81 +11,72 @@ export default class RestaurantViewer extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
-      restaurantId: this.props.match.params.restaurantId,
+      yelpId: this.props.match.params.yelpId,
       restaurant: {},
-      dishes: []
     };
 
     this.restaurantService = RestaurantServiceClient.instance();
-    // this.dishService = DishServiceClient.instance();
+  }
+
+  componentDidMount() {
+    let yelpId = this.props.match.params.yelpId;
+    this.setState({yelpId: yelpId});
+
+    let response =
+      fetch(`http://localhost:8080/api/restaurant/yelp/${yelpId}`)
+        .then(localResponse => {
+          if (localResponse.status === 404) {
+            return fetch(`http://localhost:8080/api/yelp/restaurant/${yelpId}`)
+              .then(yelpResponse => yelpResponse.json())
+          }
+          else {
+            return localResponse.json();
+          }
+        });
+
+    response.then((restaurant) => {
+      this.setState({restaurant: restaurant});
+    });
+  }
+
+
+  componentWillReceiveProps(newProps) {
+    this.setState({yelpId: newProps.match.params.yelpId});
+
+    let response =
+      fetch(`http://localhost:8080/api/restaurant/yelp/${newProps.yelpId}`)
+        .then(localResponse => {
+          if (localResponse.status === 404) {
+            return fetch(`http://localhost:8080/api/yelp/restaurant/${newProps.yelpId}`)
+              .then(yelpResponse => yelpResponse.json())
+          }
+          else {
+            return localResponse.json();
+          }
+        });
+
+    response.then((restaurant) => {
+      this.setState({restaurant: restaurant});
+    });
   }
 
   // componentDidMount() {
-  //   let yelpId = this.props.match.params.yelpId;
+  //   let restaurantId = this.props.match.params.restaurantId;
   //
-  //   this.setState({yelpId: yelpId});
-  //
-  //   let response =
-  //     fetch(`http://localhost:8080/api/restaurant/${yelpId}`)
-  //       .then(localResponse => {
-  //         if (localResponse.status === 404) {
-  //           return fetch(`http://localhost:8080/api/yelp/restaurant/${yelpId}`)
-  //             .then(yelpResponse => yelpResponse.json())
-  //         }
-  //         else {
-  //           return localResponse.json();
-  //         }
-  //       });
-  //
-  //   response.then((restaurant) => {
-  //     this.setState({restaurant: restaurant});
-  //   });
+  //   this.setState({restaurantId: restaurantId});
+  //   this.restaurantService.findRestaurantById(restaurantId)
+  //     .then(restaurant => this.setState({restaurant: restaurant}));
   // }
-  //
   //
   // componentWillReceiveProps(newProps) {
-  //   this.setState({yelpId: newProps.match.params.yelpId});
+  //   let restaurantId = newProps.match.params.restaurantId;
   //
-  //
-  //   let response =
-  //     fetch(`http://localhost:8080/api/restaurant/${newProps.yelpId}`)
-  //       .then(localResponse => {
-  //         if (localResponse.status === 404) {
-  //           return fetch(`http://localhost:8080/api/yelp/restaurant/${newProps.yelpId}`)
-  //             .then(yelpResponse => yelpResponse.json())
-  //         }
-  //         else {
-  //           return localResponse.json();
-  //         }
-  //       });
-  //
-  //   response.then((restaurant) => {
-  //     this.setState({restaurant: restaurant});
-  //   });
+  //   this.setState({restaurantId: restaurantId});
+  //   this.restaurantService.findRestaurantById(restaurantId)
+  //     .then(restaurant => this.setState({restaurant: restaurant}));
   // }
-
-  componentDidMount() {
-    let restaurantId = this.props.match.params.restaurantId;
-
-    this.setState({restaurantId: restaurantId});
-    this.restaurantService.findRestaurantById(restaurantId)
-      .then(restaurant => this.setState({restaurant: restaurant}));
-
-    // this.dishService.findAllDishesForRestaurant(restaurantId)
-    //   .then(dishes => this.setState({dishes: dishes}));
-  }
-
-  componentWillReceiveProps(newProps) {
-    let restaurantId = newProps.match.params.restaurantId;
-
-    this.setState({restaurantId: restaurantId});
-    this.restaurantService.findRestaurantById(restaurantId)
-      .then(restaurant => this.setState({restaurant: restaurant}));
-
-    // this.dishService.findAllDishesForRestaurant(restaurantId)
-    //   .then(dishes => this.setState({dishes: dishes}));
-  }
 
   render() {
     return (
@@ -122,8 +113,8 @@ export default class RestaurantViewer extends React.Component {
           <div className="col-8">
             <div className="row">
               <h1>{this.state.restaurant.name}
-                <i className="fa fa-heart-o col-2 text-right"
-                   onClick={() => alert('love love')}></i>
+                {this.state.restaurant.id !== 0 && <i className="fa fa-heart-o col-2 text-right"
+                   onClick={() => alert('love love')}></i>}
               </h1>
             </div>
             <h3>Address: {this.state.restaurant.address}</h3>
@@ -133,15 +124,8 @@ export default class RestaurantViewer extends React.Component {
         </div>
 
 
-        <PlaceOrderWidget restaurantId={this.state.restaurantId}/>
-
-
-        {/*<PlaceOrderWidget dishes={this.state.dishes}/>*/}
-
-        {/*{this.state.restaurant.id === 0 &&*/}
-        {/*<div>This restaurant is currently not our partner. We're working on it.</div>*/}
-        {/*}*/}
-
+        {(this.state.restaurant.id !== undefined && this.state.restaurant.id !== 0)
+        && <PlaceOrderWidget restaurantId={this.state.restaurant.id}/>}
       </div>
     )
   };

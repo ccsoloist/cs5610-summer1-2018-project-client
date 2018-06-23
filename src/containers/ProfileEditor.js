@@ -13,6 +13,7 @@ import OrderList from './OrderList'
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import UserServiceClient from "../services/UserServiceClient";
+import DishList from "./DishList";
 
 
 class ProfileEditorContainer extends Component {
@@ -61,7 +62,7 @@ class ProfileEditorContainer extends Component {
                     userId={this.state.userId}/>
                 </Route>
                 <Route path="/profile/:userType/:userId/orders" component={OrderList}/>
-                {/*<Route path="/profile/dishes" component={DishList}/>*/}
+                <Route path="/profile/:userType/:userId/dishes" component={DishList}/>
               </Switch>
             </div>
           </div>

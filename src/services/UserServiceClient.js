@@ -75,7 +75,11 @@ export default class UserServiceClient {
   }
 
   findAccountInfoForUser(userType, userId) {
-    return fetch('http://localhost:8080/api/profile/' + userType + '/' + userId + '/account')
+    return fetch(constants.SERVER + '/profile/' + userType + '/' + userId + '/account')
       .then(response => (response.json()));
   }
+
+  // findOwnerOfRestaurant(restaurantId) {
+  //   return fetch()
+  // }
 }

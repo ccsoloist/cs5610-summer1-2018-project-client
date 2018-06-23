@@ -108,4 +108,14 @@ export default class RestaurantServiceClient {
       body: JSON.stringify(dishes)
     });
   }
+
+  findRestaurantByOwner(userId) {
+    return fetch(constants.SERVER + `/restaurant/owner/${userId}`)
+      .then(response => {
+        if (response.status === 404) {
+          return null;
+        }
+        return response.json()
+      })
+  }
 }

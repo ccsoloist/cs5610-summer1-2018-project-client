@@ -17,14 +17,16 @@ class OrderWidgetContainer extends React.Component {
 
   render() {
     return (
-      <div className='row'>
+      <div className='row container-fluid form-group'>
         <div className='col-4'>
           <h1>OrderEditor</h1>
-          <OrderEditor/>
+          <OrderEditor dishes={this.props.dishes}
+                       restaurantId={this.props.restaurantId}/>
         </div>
         <div className='col-8'>
           <h1>Menu</h1>
-          <Menu dishes={this.props.dishes}/>
+          <Menu dishes={this.props.dishes}
+                restaurantId={this.props.restaurantId}/>
         </div>
       </div>
     );
@@ -33,7 +35,8 @@ class OrderWidgetContainer extends React.Component {
 
 
 const dispatcherToPropsMapper = (dispatch) => ({
-  findAllDishesForRestaurant: (restaurantId) => actions.findAllDishesForRestaurant(dispatch, restaurantId)
+  findAllDishesForRestaurant: (restaurantId) =>
+    actions.findAllDishesForRestaurant(dispatch, restaurantId)
 });
 
 
