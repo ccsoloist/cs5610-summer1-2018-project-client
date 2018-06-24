@@ -111,7 +111,11 @@ export default class UserServiceClient {
       method: 'get',
       credentials: 'include'
     })
-      .then(response => response.json);
+      .then(response => {
+        if (response.status !== 404) {
+          return response.json();
+        }
+      });
   }
 
   findDishesForRestaurateur(restaurateurId) {

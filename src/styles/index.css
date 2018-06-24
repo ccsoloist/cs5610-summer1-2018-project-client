@@ -189,3 +189,25 @@ body {
 .fa-heart {
     color: #FF6347
 }
+
+
+.dish-list-editor {
+    background-color: lightskyblue;
+    box-shadow: inset 0 0 5px rgba(34, 126, 236, .8);
+    border-radius: 12px;
+    padding: 5% 10%;
+}
+
+.favorite-list {
+    background-color: lightskyblue;
+    box-shadow: inset 0 0 5px rgba(34, 126, 236, .8);
+    border-radius: 12px;
+    padding: 5% 10%;
+    font-size: 120%;
+}
+
+.restaurant-detail {
+
+}
+
+

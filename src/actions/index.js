@@ -150,10 +150,18 @@ export const Register =
       });
   };
 
-export const deleteDish = (dispatch, dishId, dishes, restaurantId) => {
-  dishService.deleteDishForRestaurant(restaurantId, dishId);
-  let newDishes = dishes.filter((dish) => (dish.id !== dishId));
 
+export const logout = (dispatch) => {
+  userService.logout()
+};
+
+export const deleteDish = (dispatch, dishId, dishes, restaurantId) => {
+  let newDishes = dishes;
+  if (window.confirm("Are you sure to delete this dish?")) {
+    dishService.deleteDishForRestaurant(restaurantId, dishId);
+    newDishes = dishes.filter((dish) => (dish.id !== dishId));
+  }
+  
   dispatch({
     type: constants.DELETE_DISH,
     dishes: newDishes,

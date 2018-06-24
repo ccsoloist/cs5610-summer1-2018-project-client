@@ -5,10 +5,18 @@ import {Link} from 'react-router-dom'
 import * as actions from '../actions'
 import '../styles/index.css'
 
-const ProfileTabsContainer = ({userId, userType}) => {
+const ProfileTabsContainer = ({userId, userType, logout}) => {
   return (
     <div className="profile-tabs-container form-group row">
       <div className="profile-tabs">
+        <div className="row"
+             hidden={userType !== constants.CUSTOMER}>
+          <li className="list-group-item form-control">
+            <Link to='/'
+                  onClick={() => this.props.history.push('/')}>Home
+            </Link>
+          </li>
+        </div>
         <div className="row">
           <li className="list-group-item form-control">
             <Link to={`/profile/${userType}/${userId}/account`}>
@@ -27,6 +35,19 @@ const ProfileTabsContainer = ({userId, userType}) => {
               Edit Dishes</Link>
           </li>
         </div>
+        <div className="row" hidden={userType !== constants.CUSTOMER}>
+          <li className="list-group-item form-control">
+            <Link to={`/profile/${userType}/${userId}/favorite`}>
+              Favorite List</Link>
+          </li>
+        </div>
+        <div className="row">
+          <li className="list-group-item form-control">
+            <Link to='/login'
+                  onClick={() => logout()}>
+              Logout</Link>
+          </li>
+        </div>
       </div>
     </div>
   )
@@ -39,7 +60,9 @@ const stateToPropsMapper = (state, ownProps) => {
   }
 };
 
-const dispatcherToPropsMapper = dispatch => ({});
+const dispatcherToPropsMapper = dispatch => ({
+  logout: () => actions.logout().then(this.props.history.push('/login'))
+});
 
 const ProfileTabs = connect(
   stateToPropsMapper,

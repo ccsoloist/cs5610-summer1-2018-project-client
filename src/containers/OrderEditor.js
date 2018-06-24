@@ -29,7 +29,7 @@ const OrderEditorContainer = ({items, dishes, restaurantId, total,
 
         <br/>
         <div className="list-group-item">
-          <div hidden={items.length === 0}>Total price: {total}</div>
+          <div hidden={items.length === 0}>Total price: $ {total}</div>
           <button className="btn btn-primary float-right"
                   disabled={items.length === 0}
                   onClick={() => placeOrder(restaurantId, items, total, dishes)}>Place Order

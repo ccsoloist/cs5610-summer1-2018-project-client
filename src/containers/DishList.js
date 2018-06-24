@@ -30,25 +30,28 @@ class DishListContainer extends React.Component {
     let priceElement;
 
     return (
-      <div className="container-fluid">
-        <div className="row">
+      <div className="container-fluid dish-list-editor">
+        <div className="row text-center" style={{marginLeft: 30}}>
           <input className="form-control col-4"
                  placeholder="Dish Name"
                  type="text"
                  ref={(node) => (nameElement = node)}/>
+          &nbsp;&nbsp;
           <input className="form-control col-4"
                  placeholder="Dish Price"
                  type="text"
                  ref={(node) => (priceElement = node)}/>
+          &nbsp;&nbsp;
           <button className="btn btn-primary col-2"
                   onClick={() => this.props.addDish(nameElement.value,
                     priceElement.value,
                     this.props.dishes,
                     this.props.restaurantId)}>
-            Add Dish
+            <i className="fa fa-plus"/>
           </button>
         </div>
 
+        <br/>
         <table className="table table-hover">
           <thead>
           <tr>

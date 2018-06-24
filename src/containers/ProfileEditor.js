@@ -14,15 +14,18 @@ import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import UserServiceClient from "../services/UserServiceClient";
 import DishList from "./DishList";
+import FavoriteList from "./FavoriteList";
+import RestaurantViewer from "./RestaurantViewer";
+import Home from "./Home";
 
 
 class ProfileEditorContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userType:'',
-      userId:'',
-      user:{}
+      userType: '',
+      userId: '',
+      user: {}
     };
 
     this.userService = UserServiceClient.instance();
@@ -61,6 +64,7 @@ class ProfileEditorContainer extends Component {
                 <Route path="/profile/:userType/:userId/account" component={AccountEditor}/>
                 <Route path="/profile/:userType/:userId/orders" component={OrderList}/>
                 <Route path="/profile/:userType/:userId/dishes" component={DishList}/>
+                <Route path="/profile/:userType/:userId/favorite" component={FavoriteList}/>
               </Switch>
             </div>
           </div>

@@ -17,11 +17,12 @@ const DishListItemComponent = ({dish,  dishes, restaurantId, editMode,
       {(!editMode || selectedDishId !== dish.id) && <td className="text-center">
         <button className="btn btn-primary"
                 onClick={() => deleteDish(dish.id, dishes, restaurantId)}>
-          Remove Dish
+          <i className="fa fa-trash"/>
         </button>
+        &nbsp;&nbsp;
         <button className="btn btn-primary"
                 onClick={() => switchEdit(dish.id, editMode, dishes, restaurantId)}>
-          Edit
+          <i className="fa fa-pencil"/>
         </button>
       </td>}
 
@@ -36,10 +37,10 @@ const DishListItemComponent = ({dish,  dishes, restaurantId, editMode,
                ref={(node) => (priceElement = node)}/>
       </td>}
       {(editMode && selectedDishId === dish.id) && <td className="text-center">
-        <button className="btn btn-primary"
+        <button className="btn btn-success"
                 onClick={() => updateDish(editMode, dishes, restaurantId, dish,
                   nameElement.value, priceElement.value)}>
-          Confirm
+          <i className="fa fa-check"/>
         </button>
       </td>}
     </tr>
