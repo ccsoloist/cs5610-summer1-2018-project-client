@@ -1,6 +1,10 @@
 import * as constants from '../constants/index';
+import UserServiceClient from "./UserServiceClient";
+import RestaurantServiceClient from "./RestaurantServiceClient";
 
 let _singleton = Symbol();
+
+const restaurantService = RestaurantServiceClient.instance();
 
 export default class FavoriteServiceClient {
   constructor(singletonToken) {
@@ -72,6 +76,11 @@ export default class FavoriteServiceClient {
 
   findFavoritesForUser(userId) {
     return fetch(constants.SERVER + `/favorite/user/${userId}`)
+      .then(response => response.json());
+  }
+
+  findFollowersForRestaurant(restaurantId) {
+    return fetch(constants.SERVER + `/favorite/restaurant/${restaurantId}`)
       .then(response => response.json());
   }
 }

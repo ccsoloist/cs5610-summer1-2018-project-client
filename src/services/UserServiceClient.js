@@ -132,4 +132,35 @@ export default class UserServiceClient {
       }
     }).then(response => response.json());
   }
+
+  findAllCustomers() {
+    return fetch(constants.SERVER + '/user/customer')
+      .then(response => response.json());
+  }
+
+  findAllRestaurateurs() {
+    return fetch(constants.SERVER + '/user/restaurateur')
+      .then(response => response.json());
+  }
+
+  findAllDeliverers() {
+    return fetch(constants.SERVER + '/user/deliverer')
+      .then(response => response.json());
+  }
+
+  deleteUser(userType, userId) {
+    alert('delete');
+    console.log(userType);
+    console.log(userId);
+
+
+    return fetch(constants.SERVER + `/user/${userType}/${userId}`, {
+      method: 'delete'
+    })
+      .then(response => {
+        if (response.status === 404) {
+          alert("cannot find user")
+        }
+      })
+  }
 }

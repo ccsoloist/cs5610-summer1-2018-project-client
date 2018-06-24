@@ -11,7 +11,7 @@ export default class FavoriteList
 
     this.state = {
       userId: this.props.match.params.userId,
-      restaurants: []
+      customers: []
     };
 
     this.favoriteService = FavoriteServiceClient.instance();
@@ -19,32 +19,34 @@ export default class FavoriteList
   }
 
   componentDidMount() {
-    this.favoriteService.findFavoritesForUser(this.props.match.params.userId)
-      .then(restaurants => {
-        this.setState({restaurants: restaurants});
+    this.restaurantService.findRestaurantByOwner(this.props.match.params.userId)
+      .then(restaurant => {
+        this.favoriteService.findFollowersForRestaurant(restaurant.id)
+          .then(customers => {
+            this.setState({customers: customers})
+          })
       })
   }
 
   componentWillReceiveProps(newProps) {
-    this.favoriteService.findFavoritesForUser(newProps.match.params.userId)
-      .then(restaurants => {
-        this.setState({restaurants: restaurants});
+    this.restaurantService.findRestaurantByOwner(newProps.match.params.userId)
+      .then(restaurant => {
+        this.favoriteService.findFollowersForRestaurant(restaurant.id)
+          .then(customers => {
+            this.setState({customers: customers})
+          })
       })
   }
 
   render() {
     return (
       <div className="list-group col-10 favorite-list">
-        <div className="list-group-item list-group-item-primary text-center">Favorite Restaurants</div>
-        {this.state.restaurants.map(restaurant => {
+        <div className="list-group-item list-group-item-primary text-center">Followers</div>
+        {this.state.customers.map(customer => {
           return (
             <div className="list-group-item  text-center"
-                 key={restaurant.id}>
-              <Link to={`/restaurant/${restaurant.yelpId}`}
-                    onClick={() => {
-                      this.context.router.push(`/restaurant/${restaurant.yelpId}`)}}>
-                {restaurant.name}
-              </Link>
+                 key={customer.id}>
+              {customer.username}
             </div>
           );
         })}

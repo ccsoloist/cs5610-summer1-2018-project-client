@@ -17,6 +17,7 @@ import DishList from "./DishList";
 import FavoriteList from "./FavoriteList";
 import RestaurantViewer from "./RestaurantViewer";
 import Home from "./Home";
+import FollowerList from "./FollowerList";
 
 
 class ProfileEditorContainer extends Component {
@@ -65,6 +66,7 @@ class ProfileEditorContainer extends Component {
                 <Route path="/profile/:userType/:userId/orders" component={OrderList}/>
                 <Route path="/profile/:userType/:userId/dishes" component={DishList}/>
                 <Route path="/profile/:userType/:userId/favorite" component={FavoriteList}/>
+                <Route path="/profile/:userType/:userId/followers" component={FollowerList}/>
               </Switch>
             </div>
           </div>

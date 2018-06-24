@@ -140,7 +140,7 @@ export default class RestaurantViewer extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid restaurant-detail">
+      <div className="container-fluid">
 
         <div className="row restaurant-search-bar">
           <h2 className="col-2"
@@ -175,7 +175,7 @@ export default class RestaurantViewer extends React.Component {
 
         </div>
 
-        <div className='row' style={{marginBottom: 20}}>
+        <div className='row restaurant-detail' style={{marginBottom: 20}}>
           <div className="col-4">
             <img src={this.state.restaurant.image_url} height={180} width={300}/>
           </div>
