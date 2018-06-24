@@ -16,6 +16,7 @@ export default class App extends Component {
         <Route path="/login" component={LoginForm}/>
         <Route path="/register" component={RegisterForm}/>
         <Route path="/profile/:userType/:userId" component={ProfileEditor}/>
+        <Route path="/admin/profile/:userType/:userId" component={ProfileEditor}/>
       </Switch>
     </Router>
   )

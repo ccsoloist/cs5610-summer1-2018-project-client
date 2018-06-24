@@ -19,6 +19,27 @@ export default class OrderServiceClient {
     return this[_singleton];
   }
 
+  findUsersForOrder(orderId) {
+    return fetch(constants.SERVER + '/order/' + orderId + "/users")
+      .then(response => response.json());
+  }
+
+  finishOrder(orderId) {
+    return fetch(constants.SERVER + '/order/' + orderId + "/finish", {
+      method: 'put',
+      headers: {
+        'content-type': 'application/json'
+      }});
+  }
+
+  deleteOrderForUser(orderId) {
+    return fetch(constants.SERVER + '/order/' + orderId, {
+      method: 'delete',
+      headers: {
+        'content-type': 'application/json'
+      }
+    });
+  }
 
   createOrder(restaurantId, order) {
     let restaurateurId;

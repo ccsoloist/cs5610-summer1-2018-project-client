@@ -1,6 +1,7 @@
 import React from 'react';
 import DishListItem from "../components/DishListItem";
 import {reducer} from "../reducers";
+import {DishListReducer} from "../reducers";
 import {createStore} from "redux";
 import {connect, Provider} from "react-redux";
 import * as actions from "../actions/index";
@@ -75,6 +76,7 @@ class DishListContainer extends React.Component {
 
 const stateToPropsMapper = (state, ownProps) => {
   if (state !== undefined) {
+    // console.log(state)
     return {
       dishes: state.dishes,
       restaurantId: state.restaurantId
@@ -102,7 +104,7 @@ const DishListConnected =
     stateToPropsMapper,
     dispatcherToPropsMapper)(DishListContainer);
 
-const store = createStore(reducer);
+const store = createStore(DishListReducer);
 
 
 class DishList extends React.Component {

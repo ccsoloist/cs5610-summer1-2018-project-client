@@ -85,8 +85,7 @@ export default class UserServiceClient {
   findAccountInfoForUser(userType, userId) {
     return fetch(constants.SERVER + '/profile/' + userType + '/' + userId + '/account', {
         credentials: 'include'
-    })
-      .then(response => (response.json()));
+    }).then(response => (response.json()));
   }
 
   findOwnerOfRestaurant(restaurantId) {
