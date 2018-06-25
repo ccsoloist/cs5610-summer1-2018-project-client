@@ -53,10 +53,12 @@ export default class AdminPage extends React.Component {
   }
 
   deleteUser(userType, userId) {
-    this.userService.deleteUser(userType, userId)
-      .then(() => {
+    if (window.confirm("Confirm to delete this user")) {
+      this.userService.deleteUser(userType, userId)
+        .then(() => {
           this.refresh(userType);
-      })
+        })
+    }
   }
 
   refresh(userType) {

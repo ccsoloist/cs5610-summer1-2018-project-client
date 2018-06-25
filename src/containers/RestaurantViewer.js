@@ -10,6 +10,7 @@ import Link from "react-router-dom/es/Link";
 import UserServiceClient from "../services/UserServiceClient";
 import FavoriteServiceClient from "../services/FavoriteServiceClient";
 import SearchBar from "../components/SearchBar";
+import YelpServiceClient from "../services/YelpServiceClient";
 
 export default class RestaurantViewer extends React.Component {
 
@@ -20,13 +21,20 @@ export default class RestaurantViewer extends React.Component {
       yelpId: this.props.match.params.yelpId,
       restaurant: {},
       isLiked: false,
-      user: {}
+      user: {},
+      // term: '',
+      // location: ''
     };
 
     this.logout = this.logout.bind(this);
+    // this.termChanged = this.termChanged.bind(this);
+    // this.locationChanged = this.locationChanged.bind(this);
+    // this.findRestaurantsByCriteria = this.findRestaurantsByCriteria.bind(this);
+
     this.restaurantService = RestaurantServiceClient.instance();
     this.userService = UserServiceClient.instance();
     this.favoriteService = FavoriteServiceClient.instance();
+    this.yelpService = YelpServiceClient.instance();
   }
 
   componentDidMount() {
@@ -137,6 +145,32 @@ export default class RestaurantViewer extends React.Component {
   logout() {
     this.userService.logout();
   }
+
+  // termChanged(event) {
+  //   console.log(this.state.term);
+  //   this.setState({term: event.target.value});
+  // }
+  //
+  // locationChanged(event) {
+  //   this.setState({location: event.target.value});
+  // }
+  //
+  // findRestaurantsByCriteria(term, location) {
+  //   if (location === '') {
+  //     alert('please specify location');
+  //   }
+  //
+  //   else {
+  //     if (term !== '') {
+  //       this.yelpService.findRestaurantByTermAndLocation(term, location)
+  //         .then(restaurants => this.setState({restaurants: restaurants}));
+  //     }
+  //     if (term === '' && location !== '') {
+  //       this.yelpService.findRestaurantByLocation(location)
+  //         .then(restaurants => this.setState({restaurants: restaurants}));
+  //     }
+  //   }
+  // }
 
   render() {
     return (
