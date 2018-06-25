@@ -286,9 +286,10 @@ body {
 }
 
 .restaurant-detail {
-    /*background-color: lightskyblue;*/
+    background-color: #e9ecef;
     /*box-shadow: inset 0 0 5px rgba(34, 126, 236, .8);*/
     border-radius: 12px;
+    margin: 1% 1%;
     padding: 1% 5%;
     font-size: 120%;
 }

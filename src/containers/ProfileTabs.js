@@ -9,7 +9,12 @@ const ProfileTabsContainer = ({userId, userType, isAdmin, logout}) => {
   return (
     <div>
       <div hidden={isAdmin} className="nav nav-tabs">
-        <li className="nav-item wbdv-nav-item ">
+          <li className="nav-item wbdv-nav-item" hidden={userType !== constants.CUSTOMER}>
+            <Link className="nav-link wbdv-nav-item" to='/'
+                  onClick={() => this.props.history.push('/')}>Home
+            </Link>
+          </li>
+        <li className="nav-item wbdv-nav-item">
           <Link className="nav-link wbdv-nav-item" to={`/profile/${userType}/${userId}/account`}>
             Account</Link>
         </li>

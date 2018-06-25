@@ -179,8 +179,8 @@ export default class RestaurantViewer extends React.Component {
           <div className="col-4">
             <img src={this.state.restaurant.image_url} height={180} width={300}/>
           </div>
-
-          <div className="col-8">
+          <div className="col-1"></div>
+          <div className="col-6">
             <div className="row">
               <h3>{this.state.restaurant.name}
                 {(this.state.restaurant.id !== 0 && !this.state.isLiked)
@@ -192,11 +192,12 @@ export default class RestaurantViewer extends React.Component {
               </h3>
             </div>
             <div>
-            <h4>Address: {this.state.restaurant.address}</h4>
-            <h4>Phone: {this.state.restaurant.display_phone}</h4>
-            <h4>Category: {this.state.restaurant.category} Rating:{this.state.restaurant.rating}</h4>
+              <h4>Address: {this.state.restaurant.address}</h4>
+              <h4>Phone: {this.state.restaurant.display_phone}</h4>
+              <h4>Category: {this.state.restaurant.category}</h4>
+              <h4>Rating: {this.state.restaurant.rating}</h4>
             </div>
-            </div>
+          </div>
         </div>
 
         {(this.state.restaurant.id !== undefined && this.state.restaurant.id !== 0)

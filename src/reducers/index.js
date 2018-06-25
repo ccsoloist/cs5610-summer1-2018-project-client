@@ -8,8 +8,6 @@ export const DishListReducer = (state, action) => {
     case constants.FIND_ALL_DISHES_FOR_RESTAURANT:
     case constants.SAVE_ALL_DISHES_FOR_RESTAURANT:
     case constants.UPDATE_DISH:
-      alert('in reducer');
-      console.log(action.dishes);
       return {
         dishes: action.dishes,
         restaurantId: action.restaurantId
