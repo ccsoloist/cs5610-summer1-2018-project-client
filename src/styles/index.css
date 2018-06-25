@@ -8,6 +8,29 @@ body {
 .admin-page-bottom {
     background-color: #333;
 }
+.admin-page-bottom-1 {
+    background: steelblue;
+    /*color: #fff;*/
+    text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+    box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+    padding: 5% 10%;
+}
+
+.admin-table {
+    background-color: aliceblue;
+    box-shadow: inset 0 0 5px rgba(34, 126, 236, .8);
+    border-radius: 12px;
+    padding: 5% 10%;
+}
+
+.admin-create {
+    background: lightskyblue;
+    /*color: #fff;*/
+    text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+    /*box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);*/
+    border-radius: 12px;
+    padding: 5% 10%;
+}
 
 body {
     /*color: #fff;*/
@@ -23,6 +46,15 @@ body {
 
 .special-font {
     color: dodgerblue;
+    text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+}
+
+.trash-btn{
+    color: red;
+}
+
+.special-font-2 {
+    color: steelblue;
     text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
 }
 
@@ -148,6 +180,8 @@ body {
     border-radius: 12px;
     padding: 5% 10%;
 }
+
+
 
 .item-table {
     background-color: white;
