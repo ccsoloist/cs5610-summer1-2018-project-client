@@ -14,6 +14,10 @@ import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import UserServiceClient from "../services/UserServiceClient";
 import DishList from "./DishList";
+import FavoriteList from "./FavoriteList";
+import RestaurantViewer from "./RestaurantViewer";
+import Home from "./Home";
+import FollowerList from "./FollowerList";
 
 
 class ProfileEditorContainer extends Component {
@@ -60,18 +64,17 @@ class ProfileEditorContainer extends Component {
                          userType={this.state.userType}/>
             <div className="row">
               <Switch className="container-fluid">
-                <Route path="/profile/:userType/:userId/account"
-                       component={AccountEditor}/>
-                <Route path="/profile/:userType/:userId/orders"
-                       component={OrderList}/>
-                <Route path="/profile/:userType/:userId/dishes"
-                       component={DishList}/>
-                <Route path="/:isAdmin/profile/:userType/:userId/account"
-                       component={AccountEditor}/>
-                <Route path="/:isAdmin/profile/:userType/:userId/orders"
-                       component={OrderList}/>
-                <Route path="/:isAdmin/profile/:userType/:userId/dishes"
-                       component={DishList}/>
+                <Route path="/profile/:userType/:userId/account" component={AccountEditor}/>
+                <Route path="/profile/:userType/:userId/orders" component={OrderList}/>
+                <Route path="/profile/:userType/:userId/dishes" component={DishList}/>
+                <Route path="/profile/:userType/:userId/favorite" component={FavoriteList}/>
+                <Route path="/profile/:userType/:userId/followers" component={FollowerList}/>
+
+                <Route path="/:isAdmin/profile/:userType/:userId/account" component={AccountEditor}/>
+                <Route path="/:isAdmin/profile/:userType/:userId/orders" component={OrderList}/>
+                <Route path="/:isAdmin/profile/:userType/:userId/dishes" component={DishList}/>
+                <Route path="/:isAdmin/profile/:userType/:userId/favorite" component={FavoriteList}/>
+                <Route path="/:isAdmin/profile/:userType/:userId/followers" component={FollowerList}/>
               </Switch>
             </div>
           </div>

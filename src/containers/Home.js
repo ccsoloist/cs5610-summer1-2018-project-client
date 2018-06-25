@@ -4,6 +4,7 @@ import SearchBar from "../components/SearchBar";
 import * as constants from "../constants";
 import RestaurantServiceClient from "../services/RestaurantServiceClient";
 import YelpServiceClient from "../services/YelpServiceClient";
+import UserServiceClient from "../services/UserServiceClient";
 
 export default class Home
   extends React.Component {
@@ -13,10 +14,12 @@ export default class Home
 
     this.state = {
       restaurants: [],
+      user: {}
     };
 
     this.yelpService = YelpServiceClient.instance();
     this.restaurantService = RestaurantServiceClient.instance();
+    this.userService = UserServiceClient.instance();
 
     this.termChanged = this.termChanged.bind(this);
     this.locationChanged = this.locationChanged.bind(this);
@@ -28,10 +31,18 @@ export default class Home
   componentDidMount() {
     this.yelpService.findAllRestaurants()
       .then(restaurants => this.setState({restaurants: restaurants}));
+
+    this.userService.findCurrentUser()
+      .then(user => {
+        this.setState({user: user});
+      });
   }
 
   componentWillReceiveProps(newProps) {
-
+    this.userService.findCurrentUser()
+      .then(user => {
+        this.setState({user: user});
+      });
   }
 
   termChanged(event) {
@@ -83,7 +94,8 @@ export default class Home
   render() {
     return (
       <div>
-        <SearchBar action={this.updateRestaurants}/>
+        <SearchBar action={this.updateRestaurants}
+                   user={this.state.user}/>
 
         <div className="row" style={{margin: 20}}>
           {this.state.restaurants !== undefined &&
@@ -99,9 +111,6 @@ export default class Home
                     <small className="card-text">{restaurant.address}</small>
                   </div>
                   <div className="card-footer">
-                    {/*<Link to={`restaurant/${restaurant.yelpId}`}>*/}
-                    {/*View Detail*/}
-                    {/*</Link>*/}
                     <button className="btn btn-outline-primary"
                             onClick={() => this.redirectToRestaurant(restaurant.yelpId)}>
                       View Detail

@@ -9,6 +9,7 @@ import PlaceOrderWidget from "./PlaceOrderWidget";
 import Link from "react-router-dom/es/Link";
 import UserServiceClient from "../services/UserServiceClient";
 import FavoriteServiceClient from "../services/FavoriteServiceClient";
+import SearchBar from "../components/SearchBar";
 
 export default class RestaurantViewer extends React.Component {
 
@@ -47,6 +48,11 @@ export default class RestaurantViewer extends React.Component {
     response.then((restaurant) => {
       this.setState({restaurant: restaurant});
 
+      this.userService.findCurrentUser()
+        .then(user => {
+          this.setState({user: user});
+        });
+
       if (restaurant.id !== 0) {
         this.favoriteService.findFavorite(restaurant.id)
           .then(response => {
@@ -78,6 +84,11 @@ export default class RestaurantViewer extends React.Component {
 
     response.then((restaurant) => {
       this.setState({restaurant: restaurant});
+
+      this.userService.findCurrentUser()
+        .then(user => {
+          this.setState({user: user});
+        });
 
       if (restaurant.id !== 0) {
         this.favoriteService.findFavorite(restaurant.id)
@@ -132,11 +143,13 @@ export default class RestaurantViewer extends React.Component {
       <div className="container-fluid">
 
         <div className="row restaurant-search-bar">
-          <h2 className="col-2">Hungya</h2>
+          <h2 className="col-2"
+              onClick={() => this.props.history.push('/')}>Hungya</h2>
           <input className="form-control col-3"
                  placeholder="Restaurant, Category..."
                  type="text"
                  onChange={this.termChanged}/>
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
           <input className="form-control col-3"
                  placeholder="Location"
                  type="text"
@@ -146,16 +159,23 @@ export default class RestaurantViewer extends React.Component {
             <i className="fa fa-search"/>
           </button>
 
-          <div className="col-3 text-center">
-            <i className="fa fa-user"/>
-            <span>Welcome, username!</span>
-            <Link to="/"
-                  onClick={() => this.logout()}>Logout</Link>
-            <i className="fa fa-sign-out col-1"/>
+          <div className="col-3 text-right">
+
+            {this.state.user !== undefined &&
+            <Link to={`/profile/customer/${this.state.user.id}`}>Profile&nbsp;&nbsp;/&nbsp;&nbsp;</Link>}
+            {this.state.user !== undefined &&
+            <Link to='/'
+                  onClick={() => this.logout()}>Logout</Link>}
+
+            {this.state.user === undefined &&
+            <Link to="/login">Login&nbsp;&nbsp;/&nbsp;&nbsp;</Link>}
+            {this.state.user === undefined &&
+            <Link to="/register">Register</Link>}
           </div>
+
         </div>
 
-        <div className='row' style={{marginBottom: 20}}>
+        <div className='row restaurant-detail' style={{marginBottom: 20}}>
           <div className="col-4">
             <img src={this.state.restaurant.image_url} height={180} width={300}/>
           </div>

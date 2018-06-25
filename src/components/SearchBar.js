@@ -2,6 +2,7 @@ import React from 'react';
 import {Link}from "react-router-dom";
 import YelpServiceClient from "../services/YelpServiceClient";
 import RestaurantServiceClient from "../services/RestaurantServiceClient";
+import UserServiceClient from "../services/UserServiceClient";
 
 
 export default class SearchBar
@@ -16,6 +17,8 @@ export default class SearchBar
 
     this.termChanged = this.termChanged.bind(this);
     this.locationChanged = this.locationChanged.bind(this);
+
+    this.userService = UserServiceClient.instance();
   }
 
   termChanged(event) {
@@ -24,6 +27,10 @@ export default class SearchBar
 
   locationChanged(event) {
     this.setState({location: event.target.value});
+  }
+
+  logout() {
+    this.userService.logout();
   }
 
   render() {
@@ -46,10 +53,18 @@ export default class SearchBar
         </button>
 
         <div className="col-3 text-right">
-          <Link to="/login">Login</Link>
-          &nbsp;&nbsp;/&nbsp;&nbsp;
-          <Link to="/register">Register</Link>
+          {this.props.user !== undefined &&
+          <Link to={`/profile/customer/${this.props.user.id}`}>Profile&nbsp;&nbsp;/&nbsp;&nbsp;</Link>}
+          {this.props.user !== undefined &&
+          <Link to='/'
+                onClick={() => this.logout()}>Logout</Link>}
+
+          {this.props.user === undefined &&
+          <Link to="/login">Login&nbsp;&nbsp;/&nbsp;&nbsp;</Link>}
+          {this.props.user === undefined &&
+          <Link to="/register">Register</Link>}
         </div>
+
       </div>
       );
   }

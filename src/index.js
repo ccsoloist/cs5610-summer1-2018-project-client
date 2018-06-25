@@ -16,6 +16,7 @@ import {Provider} from "react-redux";
 import Menu from "./containers/Menu";
 import Home from "./containers/Home";
 import FavoriteList from "./containers/FavoriteList";
+import AdminPage from "./containers/AdminPage";
 
 
 ReactDOM.render(

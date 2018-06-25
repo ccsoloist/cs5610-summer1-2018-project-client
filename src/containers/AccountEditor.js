@@ -11,8 +11,10 @@ export default class AccountEditor extends Component {
       userId: this.props.match.params.userId,
       isAdmin: this.props.match.params.isAdmin === "admin"
     };
-    this.updateForm = this.updateForm.bind(this);
+
     this.userServiceClient = UserServiceClient.instance();
+
+    this.updateForm = this.updateForm.bind(this);
     this.findProfileForUser = this.findProfileForUser.bind(this);
     this.updateUserAccount = this.updateUserAccount.bind(this);
   }
