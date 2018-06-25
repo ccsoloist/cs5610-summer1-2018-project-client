@@ -148,11 +148,6 @@ export default class UserServiceClient {
   }
 
   deleteUser(userType, userId) {
-    alert('delete');
-    console.log(userType);
-    console.log(userId);
-
-
     return fetch(constants.SERVER + `/user/${userType}/${userId}`, {
       method: 'delete'
     })

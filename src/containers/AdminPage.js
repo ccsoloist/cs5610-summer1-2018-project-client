@@ -53,11 +53,6 @@ export default class AdminPage extends React.Component {
   }
 
   deleteUser(userType, userId) {
-
-    console.log(userType);
-    console.log(userId);
-
-
     this.userService.deleteUser(userType, userId)
       .then(() => {
           this.refresh(userType);

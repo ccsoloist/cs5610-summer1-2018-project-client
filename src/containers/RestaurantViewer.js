@@ -34,10 +34,10 @@ export default class RestaurantViewer extends React.Component {
     this.setState({yelpId: yelpId});
 
     let response =
-      fetch(`http://localhost:8080/api/restaurant/yelp/${yelpId}`)
+      fetch(constants.SERVER + `/restaurant/yelp/${yelpId}`)
         .then(localResponse => {
           if (localResponse.status === 404) {
-            return fetch(`http://localhost:8080/api/yelp/restaurant/${yelpId}`)
+            return fetch(constants.SERVER + `/yelp/restaurant/${yelpId}`)
               .then(yelpResponse => yelpResponse.json())
           }
           else {
@@ -71,10 +71,10 @@ export default class RestaurantViewer extends React.Component {
     this.setState({yelpId: newProps.match.params.yelpId});
 
     let response =
-      fetch(`http://localhost:8080/api/restaurant/yelp/${newProps.yelpId}`)
+      fetch(constants.SERVER + `/restaurant/yelp/${newProps.yelpId}`)
         .then(localResponse => {
           if (localResponse.status === 404) {
-            return fetch(`http://localhost:8080/api/yelp/restaurant/${newProps.yelpId}`)
+            return fetch(constants.SERVER + `/yelp/restaurant/${newProps.yelpId}`)
               .then(yelpResponse => yelpResponse.json())
           }
           else {

@@ -12,6 +12,10 @@ const OrderWidgetComponent = (
     previewOrderWidget, review, reviewMode, currentOrderId, reviewDeliverer, deleteOrder, isAdmin
   }) => {
   let select;
+
+  console.log(order.items);
+
+
   return (
     <form className="order-widget-container">
       <table className="table">

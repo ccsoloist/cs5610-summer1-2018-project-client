@@ -158,7 +158,7 @@ const RegisterFormContainer = (
 };
 
 const stateToPropsMapper = (state, ownProps) => {
-  if (state != null) {
+  if (state != null && state.userType !== undefined) {
     return {
       userType: state.userType,
       claimed: state.claimed,
