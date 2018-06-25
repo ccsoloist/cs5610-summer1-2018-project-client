@@ -106,7 +106,7 @@ const RegisterFormContainer = (
                  hidden={userType !== constants.RESTAURATEUR}>
               <span>&nbsp;</span>
               <div className="form-group">
-                <label>Claim Restaurant by 16177423474!</label>
+                <label>Claim Restaurant by Phone</label>
                 <input type="text"
                        className="form-control"
                        placeholder="Enter Phone"
