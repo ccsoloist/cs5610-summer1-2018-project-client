@@ -41,7 +41,7 @@ const dispatcherToPropsMapper = (dispatch) => ({
 
 
 const stateToPropsMapper = (state, ownProps) => {
-  if (state !== undefined) {
+  if (state.dishes !== undefined) {
     return {
       dishes: state.dishes,
       restaurantId: ownProps.restaurantId

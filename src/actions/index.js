@@ -85,7 +85,9 @@ export const typeChanged = (dispatch, userType) => dispatch({
 
 
 export const Login = (dispatch, userType, username, password) => {
-  let user = {
+  console.log(username);
+  console.log(password);
+  let user_pass = {
     username: username,
     password: password
     // userType: userType
@@ -121,13 +123,15 @@ export const Login = (dispatch, userType, username, password) => {
   //   }
   // });
 
-  userService.login(user, userType)
+  userService.login(user_pass, userType)
     .then(user => {
+      console.log(user)
       if (user === null) {
         alert("User not found, please register!");
         //redirecting
-      }
-      else {
+      } else if (user_pass.username === "admin" && user_pass.password === "admin") {
+        window.location.replace("/admin");
+      } else {
         dispatch({
           type: constants.LOGIN,
           userId: user.id,
