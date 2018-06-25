@@ -195,7 +195,7 @@ const RegisterForm = state => (
     <RegisterFormConnected
       restaurantId={-1}
       claimed={false}
-      userType={constants.RESTAURATEUR}/>
+      userType={constants.CUSTOMER}/>
   </Provider>
 );
 
