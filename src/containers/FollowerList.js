@@ -40,7 +40,8 @@ export default class FavoriteList
 
   render() {
     return (
-      <div className="list-group col-10 favorite-list">
+      <div className="col-12">
+      <div className="list-group  favorite-list">
         <div className="list-group-item list-group-item-primary text-center">Followers</div>
         {this.state.customers.map(customer => {
           return (
@@ -50,6 +51,7 @@ export default class FavoriteList
             </div>
           );
         })}
+      </div>
       </div>
     );
   }

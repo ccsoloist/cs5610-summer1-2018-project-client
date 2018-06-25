@@ -6,6 +6,7 @@ import RestaurantGrid from './RestaurantGrid'
 import ProfileEditor from './ProfileEditor'
 import RestaurantViewer from "./RestaurantViewer";
 import Home from "./Home";
+import AdminPage from "./AdminPage";
 
 export default class App extends Component {
   render = () => (
@@ -16,6 +17,8 @@ export default class App extends Component {
         <Route path="/login" component={LoginForm}/>
         <Route path="/register" component={RegisterForm}/>
         <Route path="/profile/:userType/:userId" component={ProfileEditor}/>
+        <Route exact path="/admin" component={AdminPage}/>
+        <Route path="/admin/profile/:userType/:userId" component={ProfileEditor}/>
       </Switch>
     </Router>
   )

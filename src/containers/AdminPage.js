@@ -2,7 +2,7 @@ import React from 'react';
 import UserServiceClient from "../services/UserServiceClient";
 import * as constants from "../constants";
 import RegisterForm from "./RegisterForm";
-
+import {Link} from 'react-router-dom';
 
 export default class AdminPage extends React.Component {
   constructor(props) {
@@ -86,9 +86,9 @@ export default class AdminPage extends React.Component {
     let userTypeEle, usernameEle, passwordEle;
 
     return (
-      <div className="container">
-        <div className='list-group'>
-          <table className="table table-hover">
+      <div className="container-fluid admin-page-bottom">
+        <div className='container list-group admin-page-bottom-1'>
+          <table className="table table-hover admin-table">
             <thead className="form-group">
             <tr className="text-center">
               <th>Username</th>
@@ -98,9 +98,9 @@ export default class AdminPage extends React.Component {
             </tr>
             </thead>
 
-            <tbody>
+            <tbody className="special-font">
             <tr>
-              <td>Customers</td>
+              <td className="special-font-2">Customers</td>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
@@ -112,7 +112,7 @@ export default class AdminPage extends React.Component {
                   <td>
                     <i className="fa fa-user"/>
                     &nbsp;&nbsp;&nbsp;
-                    <label>{customer.username}</label>
+                    <label className="special-font">{customer.username}</label>
                   </td>
                   <td>
                     {customer.firstName}
@@ -121,10 +121,11 @@ export default class AdminPage extends React.Component {
                     {customer.lastName}
                   </td>
                   <td>
-                    <i className='fa fa-trash'
+                    <Link to={`admin/profile/customer/${customer.id}`}>
+                      <i className='fa fa-pencil'/>
+                    </Link>&nbsp;&nbsp;&nbsp;
+                    <i className='fa fa-trash trash-btn'
                        onClick={() => this.deleteUser(constants.CUSTOMER, customer.id)}/>
-                    &nbsp;&nbsp;&nbsp;
-                    <i className='fa fa-pencil'/>
                   </td>
                 </tr>
               );
@@ -132,7 +133,7 @@ export default class AdminPage extends React.Component {
 
 
             <tr>
-              <td>Restaurateurs</td>
+              <td className="special-font-2">Restaurateurs</td>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
@@ -144,7 +145,7 @@ export default class AdminPage extends React.Component {
                   <td className="text-center">
                     <i className="fa fa-user"/>
                     &nbsp;&nbsp;&nbsp;
-                    <label>{restaurateur.username}</label>
+                    <label className="special-font">{restaurateur.username}</label>
                   </td>
                   <td className="text-center">
                     {restaurateur.firstName}
@@ -153,17 +154,19 @@ export default class AdminPage extends React.Component {
                     {restaurateur.lastName}
                   </td>
                   <td className="text-center">
-                    <i className='fa fa-trash'
-                       onClick={() => this.deleteUser(constants.RESTAURATEUR, restaurateur.id)}/>
-                    &nbsp;&nbsp;&nbsp;
+                    <Link to={`admin/profile/restaurateur/${restaurateur.id}`}>
                     <i className='fa fa-pencil'/>
+                      &nbsp;&nbsp;&nbsp;
+                    </Link>
+                    <i className='fa fa-trash trash-btn'
+                       onClick={() => this.deleteUser(constants.RESTAURATEUR, restaurateur.id)}/>
                   </td>
                 </tr>
               );
             })}
 
             <tr>
-              <td>Deliverers</td>
+              <td className="special-font-2">Deliverers</td>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
               <td>&nbsp;</td>
@@ -184,10 +187,11 @@ export default class AdminPage extends React.Component {
                     {deliverer.lastName}
                   </td>
                   <td className="text-center">
-                    <i className='fa fa-trash'
+                    <Link to={`admin/profile/deliverer/${deliverer.id}`}>
+                      <i className='fa fa-pencil'/>
+                    </Link>&nbsp;&nbsp;&nbsp;
+                    <i className='fa fa-trash trash-btn'
                        onClick={() => this.deleteUser(constants.DELIVERER, deliverer.id)}/>
-                    &nbsp;&nbsp;&nbsp;
-                    <i className='fa fa-pencil'/>
                   </td>
                 </tr>
               );
@@ -195,7 +199,7 @@ export default class AdminPage extends React.Component {
             </tbody>
           </table>
 
-          <div className="row text-center">
+          <div className="admin-create row text-center">
 
             <select className="form-control col-2"
                     ref={(node) => (userTypeEle = node)}
@@ -213,7 +217,7 @@ export default class AdminPage extends React.Component {
 
             <input className="form-control col-4"
                    placeholder="Password"
-                   defaultValue="hunya"
+                   defaultValue="hungya"
                    type="password"
                    ref={(node) => (passwordEle = node)}/>
 

@@ -5,55 +5,70 @@ import {Link} from 'react-router-dom'
 import * as actions from '../actions'
 import '../styles/index.css'
 
-const ProfileTabsContainer = ({userId, userType, logout}) => {
+const ProfileTabsContainer = ({userId, userType, isAdmin, logout}) => {
   return (
-    <div className="profile-tabs-container form-group row">
-      <div className="profile-tabs">
-        <div className="row"
-             hidden={userType !== constants.CUSTOMER}>
-          <li className="list-group-item form-control">
-            <Link to='/'
-                  onClick={() => this.props.history.push('/')}>Home
-            </Link>
-          </li>
-        </div>
-        <div className="row">
-          <li className="list-group-item form-control">
-            <Link to={`/profile/${userType}/${userId}/account`}>
-              My Account</Link>
-          </li>
-        </div>
-        <div className="row">
-          <li className="list-group-item form-control">
-            <Link to={`/profile/${userType}/${userId}/orders`}>
-              Recent Orders</Link>
-          </li>
-        </div>
-        <div className="row" hidden={userType !== constants.RESTAURATEUR}>
-          <li className="list-group-item form-control">
-            <Link to={`/profile/${userType}/${userId}/dishes`}>
-              Edit Dishes</Link>
-          </li>
-        </div>
-        <div className="row" hidden={userType !== constants.RESTAURATEUR}>
-          <li className="list-group-item form-control">
-            <Link to={`/profile/${userType}/${userId}/followers`}>
-              Followers</Link>
-          </li>
-        </div>
-        <div className="row" hidden={userType !== constants.CUSTOMER}>
-          <li className="list-group-item form-control">
-            <Link to={`/profile/${userType}/${userId}/favorite`}>
-              Favorite List</Link>
-          </li>
-        </div>
-        <div className="row">
-          <li className="list-group-item form-control">
-            <Link to='/login'
-                  onClick={() => logout()}>
-              Logout</Link>
-          </li>
-        </div>
+    <div>
+      <div hidden={isAdmin} className="nav nav-tabs">
+        <li className="nav-item wbdv-nav-item ">
+          <Link className="nav-link wbdv-nav-item" to={`/profile/${userType}/${userId}/account`}>
+            Account</Link>
+        </li>
+        <li className="nav-item wbdv-nav-item">
+          <Link className="nav-link wbdv-nav-item" to={`/profile/${userType}/${userId}/orders`}>
+            Recent Orders</Link>
+        </li>
+        <li className="nav-item wbdv-nav-item"
+            hidden={userType !== constants.RESTAURATEUR}>
+          <Link className="nav-link wbdv-nav-item"
+                to={`/profile/${userType}/${userId}/dishes`}>
+            Edit Dishes</Link>
+        </li>
+        <li className="nav-item wbdv-nav-item"
+            hidden={userType !== constants.RESTAURATEUR}>
+          <Link className="nav-link wbdv-nav-item"
+                to={`/profile/${userType}/${userId}/followers`}>
+            Followers</Link>
+        </li>
+        <li className="nav-item wbdv-nav-item"
+            hidden={userType !== constants.CUSTOMER}>
+          <Link className="nav-link wbdv-nav-item"
+                to={`/profile/${userType}/${userId}/favorite`}>
+            Favorite List</Link>
+        </li>
+        <li className="nav-item wbdv-nav-item">
+          <Link className="nav-link wbdv-nav-item"
+                to='/login' onClick={() => logout()}>
+            Logout</Link>
+        </li>
+      </div>
+
+      <div hidden={!isAdmin} className="nav nav-tabs ">
+        <li className="nav-item wbdv-nav-item ">
+          <Link className="nav-link wbdv-nav-item" to={`/admin/profile/${userType}/${userId}/account`}>
+            Account</Link>
+        </li>
+        <li className="nav-item wbdv-nav-item">
+          <Link className="nav-link wbdv-nav-item" to={`/admin/profile/${userType}/${userId}/orders`}>
+            Recent Orders</Link>
+        </li>
+        <li className="nav-item wbdv-nav-item"
+            hidden={userType !== constants.RESTAURATEUR}>
+          <Link className="nav-link wbdv-nav-item"
+                to={`/admin/profile/${userType}/${userId}/dishes`}>
+            Edit Dishes</Link>
+        </li>
+        <li className="nav-item wbdv-nav-item"
+            hidden={userType !== constants.RESTAURATEUR}>
+          <Link className="nav-link wbdv-nav-item"
+                to={`/admin/profile/${userType}/${userId}/followers`}>
+            Followers</Link>
+        </li>
+        <li className="nav-item wbdv-nav-item"
+            hidden={userType !== constants.CUSTOMER}>
+          <Link className="nav-link wbdv-nav-item"
+                to={`/admin/profile/${userType}/${userId}/favorite`}>
+            Favorite List</Link>
+        </li>
       </div>
     </div>
   )
@@ -62,7 +77,8 @@ const ProfileTabsContainer = ({userId, userType, logout}) => {
 const stateToPropsMapper = (state, ownProps) => {
   return {
     userType: ownProps.userType,
-    id: ownProps.id
+    id: ownProps.id,
+    isAdmin: ownProps.isAdmin
   }
 };
 

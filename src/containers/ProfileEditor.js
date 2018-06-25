@@ -24,15 +24,17 @@ class ProfileEditorContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userType: '',
-      userId: '',
-      user: {}
+      userType:'',
+      userId:'',
+      user:{},
+      isAdmin: false
     };
 
     this.userService = UserServiceClient.instance();
   }
 
   componentDidMount() {
+    this.setState({isAdmin: window.location.pathname.split('/')[1] === "admin"});
     var address = window.location.pathname.split('/profile/')[1].split('/');
     let userType = address[0];
     let userId = address[1];
@@ -56,17 +58,23 @@ class ProfileEditorContainer extends Component {
     return (
       <Router>
         <div className="profile-editor-container">
-          <div className="profile-editor form-group row container-fluid">
-            <div className="col-4">
-              <ProfileTabs userId={this.state.userId} userType={this.state.userType}/>
-            </div>
-            <div className="col-8">
+          <div className="profile-editor form-group container-fluid">
+            <ProfileTabs isAdmin={this.state.isAdmin}
+                         userId={this.state.userId}
+                         userType={this.state.userType}/>
+            <div className="row">
               <Switch className="container-fluid">
                 <Route path="/profile/:userType/:userId/account" component={AccountEditor}/>
                 <Route path="/profile/:userType/:userId/orders" component={OrderList}/>
                 <Route path="/profile/:userType/:userId/dishes" component={DishList}/>
                 <Route path="/profile/:userType/:userId/favorite" component={FavoriteList}/>
                 <Route path="/profile/:userType/:userId/followers" component={FollowerList}/>
+
+                <Route path="/:isAdmin/profile/:userType/:userId/account" component={AccountEditor}/>
+                <Route path="/:isAdmin/profile/:userType/:userId/orders" component={OrderList}/>
+                <Route path="/:isAdmin/profile/:userType/:userId/dishes" component={DishList}/>
+                <Route path="/:isAdmin/profile/:userType/:userId/favorite" component={FavoriteList}/>
+                <Route path="/:isAdmin/profile/:userType/:userId/followers" component={FollowerList}/>
               </Switch>
             </div>
           </div>

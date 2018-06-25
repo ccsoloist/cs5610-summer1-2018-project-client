@@ -1,6 +1,7 @@
 import React from 'react';
 import DishListItem from "../components/DishListItem";
 import {reducer} from "../reducers";
+import {DishListReducer} from "../reducers";
 import {createStore} from "redux";
 import {connect, Provider} from "react-redux";
 import * as actions from "../actions/index";
@@ -30,6 +31,7 @@ class DishListContainer extends React.Component {
     let priceElement;
 
     return (
+      <div className="col-12">
       <div className="container-fluid dish-list-editor">
         <div className="row text-center" style={{marginLeft: 30}}>
           <input className="form-control col-4"
@@ -52,7 +54,7 @@ class DishListContainer extends React.Component {
         </div>
 
         <br/>
-        <table className="table table-hover">
+        <table className="dish-list-table table table-hover">
           <thead>
           <tr>
             <th className="text-center">Name</th>
@@ -72,12 +74,14 @@ class DishListContainer extends React.Component {
           </tbody>
         </table>
       </div>
+      </div>
     )
   }
 }
 
 const stateToPropsMapper = (state, ownProps) => {
   if (state !== undefined) {
+    // console.log(state)
     return {
       dishes: state.dishes,
       restaurantId: state.restaurantId
@@ -105,7 +109,7 @@ const DishListConnected =
     stateToPropsMapper,
     dispatcherToPropsMapper)(DishListContainer);
 
-const store = createStore(reducer);
+const store = createStore(DishListReducer);
 
 
 class DishList extends React.Component {

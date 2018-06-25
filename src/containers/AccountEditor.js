@@ -8,7 +8,8 @@ export default class AccountEditor extends Component {
     super(props);
     this.state = {
       userType: this.props.match.params.userType,
-      userId: this.props.match.params.userId
+      userId: this.props.match.params.userId,
+      isAdmin: this.props.match.params.isAdmin === "admin"
     };
 
     this.userServiceClient = UserServiceClient.instance();
@@ -67,7 +68,7 @@ export default class AccountEditor extends Component {
 
   render() {
     return (
-      <div className="account-editor-container">
+      <div className="col-12 account-editor-container">
         <form className="account-editor">
           <fieldset disabled>
             <div className="form-group">
@@ -94,7 +95,9 @@ export default class AccountEditor extends Component {
             <input type="text"
                    className="form-control"
                    value={this.state.restaurantName || ''}
-                   placeholder="Restaurant Name" readOnly/>
+                   placeholder="Restaurant Name"
+                   onChange={e => this.updateForm({restaurantName: e.target.value})}
+                   readOnly={!this.state.isAdmin}/>
           </div>
 
           <div className="form-group row">

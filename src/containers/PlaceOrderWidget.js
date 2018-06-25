@@ -16,6 +16,8 @@ class OrderWidgetContainer extends React.Component {
 
 
   render() {
+    console.log(this.props.dishes);
+
     return (
       <div className='row container-fluid form-group'>
         <div className='col-4'>
@@ -41,7 +43,7 @@ const dispatcherToPropsMapper = (dispatch) => ({
 
 
 const stateToPropsMapper = (state, ownProps) => {
-  if (state !== undefined) {
+  if (state.dishes !== undefined) {
     return {
       dishes: state.dishes,
       restaurantId: ownProps.restaurantId

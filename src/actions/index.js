@@ -3,11 +3,20 @@ import UserServiceClient from "../services/UserServiceClient";
 import RestaurantServiceClient from "../services/RestaurantServiceClient";
 import DishServiceClient from "../services/DishServiceClient";
 import OrderServiceClient from "../services/OrderServiceClient";
+import ReviewServiceClient from "../services/ReviewServiceClient";
 
 const userService = UserServiceClient.instance();
 const dishService = DishServiceClient.instance();
 const restaurantService = RestaurantServiceClient.instance();
 const orderService = OrderServiceClient.instance();
+const reviewService = ReviewServiceClient.instance();
+
+export const changeReviewType = (dispatch, reviewType) => {
+  dispatch({
+    type: constants.CHANGE_REVIEW_TYPE,
+    reviewType: reviewType
+  });
+};
 
 export const claimRestaurant = (dispatch, userType, claimed, phone) => {
   restaurantService.claimRestaurantByPhone(phone)
@@ -20,6 +29,53 @@ export const claimRestaurant = (dispatch, userType, claimed, phone) => {
         restaurantId: response // id in local database
       })
     });
+};
+
+export const deleteOrder = (dispatch, orderId) => {
+  orderService.deleteOrderForUser(orderId)
+    .then((response) => dispatch({
+      type: constants.DELETE_ORDER
+    }));
+};
+
+export const toggleReviewMode = (dispatch, orderId, reviewMode, delivererId) => {
+  reviewService.findReview(delivererId)
+    .then(response => {
+      if (!response) {
+        dispatch({
+          type: constants.TOGGLE_REVIEW_MODE,
+          currentOrderId: orderId,
+          reviewMode: !reviewMode,
+          reviewType: constants.FAIR
+        });
+      } else {
+        console.log(response.reviewType);
+        dispatch({
+          type: constants.TOGGLE_REVIEW_MODE,
+          currentOrderId: orderId,
+          reviewMode: !reviewMode,
+          reviewType: response.reviewType
+        });
+      }
+    })
+};
+
+export const previewOrderWidget = (dispatch, orderId, previewMode) => {
+  dispatch({
+    type: constants.PREVIEW_ORDER_WIDGET,
+    currentOrderId: orderId,
+    previewMode: !previewMode
+  });
+};
+
+export const reviewDeliverer = (dispatch, orderId, reviewMode, reviewType, delivererId) => {
+  reviewService.customerReviewDeliverer(reviewType, delivererId)
+    .then(response => dispatch({
+      type: constants.REVIEW_DELIVERER,
+      currentOrderId: orderId,
+      reviewMode: !reviewMode,
+      reviewType: reviewType
+  }));
 };
 
 export const typeChanged = (dispatch, userType) => dispatch({
@@ -216,6 +272,7 @@ export const findAllDishesForRestaurant = (dispatch, restaurantId) => {
     });
 };
 
+
 export const saveAllDishesForRestaurantId = (dispatch, restaurantId, dishes) => {
   dishService.saveAllDishesForRestaurant(restaurantId, dishes);
   dispatch({
@@ -238,7 +295,8 @@ export const switchEdit = (dispatch, selectedDishId, editMode, dishes, restauran
 export const finishOrder = (dispatch, orderId) => {
   orderService.finishOrder(orderId)
     .then(() => dispatch({
-      type: constants.FINISH_ORDER
+      type: constants.FINISH_ORDER,
+      currentOrderId: orderId
     }));
 };
 

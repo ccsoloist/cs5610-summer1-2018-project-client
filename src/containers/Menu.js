@@ -6,6 +6,9 @@ import {reducer} from "../reducers";
 
 const MenuComponent = ({dishes, restaurantId, items, total,
                          addDishToOrder}) => {
+  console.log('in render');
+  console.log(dishes);
+
   return (
     <table className="table menu">
       <thead>
@@ -36,14 +39,18 @@ const MenuComponent = ({dishes, restaurantId, items, total,
 };
 
 const dispatcherToPropsMapper = (dispatch) => ({
-  findAllDishesForRestaurant: (restaurantId) =>
-    actions.findAllDishesForRestaurant(dispatch, restaurantId),
+  // findAllDishesForRestaurant: (restaurantId) =>
+  //   actions.findAllDishesForRestaurant(dispatch, restaurantId),
   addDishToOrder: (dish, dishes, restaurantId, items, total) =>
     actions.addDishToOrder(dispatch, dish, dishes, restaurantId, items, total),
 });
 
 
 const stateToPropsMapper = (state, ownProps) => {
+  console.log('in mapper');
+  console.log(ownProps);
+  console.log(state);
+
   let items;
   let total;
   if (state === undefined || state.items === undefined) {

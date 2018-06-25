@@ -34,7 +34,8 @@ export default class FavoriteList
 
   render() {
     return (
-      <div className="list-group col-10 favorite-list">
+      <div className="col-12">
+      <div className="list-group favorite-list">
         <div className="list-group-item list-group-item-primary text-center">Favorite Restaurants</div>
         {this.state.restaurants.map(restaurant => {
           return (
@@ -48,6 +49,7 @@ export default class FavoriteList
             </div>
           );
         })}
+      </div>
       </div>
     );
   }
