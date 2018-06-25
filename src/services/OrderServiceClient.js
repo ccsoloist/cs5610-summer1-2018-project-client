@@ -40,7 +40,24 @@ export default class OrderServiceClient {
             if (response.status === 403) {
               alert('please log in');
             }
+            else {
+              alert('order placed');
+            }
           })
       });
+  }
+
+
+  findUsersForOrder(orderId) {
+    return fetch(constants.SERVER + '/order/' + orderId + "/users")
+      .then(response => response.json());
+  }
+
+  finishOrder(orderId) {
+    return fetch(constants.SERVER + '/order/' + orderId + "/finish", {
+      method: 'put',
+      headers: {
+        'content-type': 'application/json'
+      }});
   }
 }

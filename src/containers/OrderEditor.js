@@ -6,8 +6,11 @@ import * as actions from '../actions/index';
 const OrderEditorContainer = ({items, dishes, restaurantId, total,
                                 increaseAmount, decreaseAmount, placeOrder}) => {
   return (
-    <div>
       <div className="order-editor list-group">
+        {items.length === 0 &&
+        <div className="list-group-item">
+          Your cart is empty
+        </div>}
         {items.map((item) => {
           return (
             <div key={item.dish.id} className="list-group-item">
@@ -27,7 +30,6 @@ const OrderEditorContainer = ({items, dishes, restaurantId, total,
           );
         })}
 
-        <br/>
         <div className="list-group-item">
           <div hidden={items.length === 0}>Total price: $ {total}</div>
           <button className="btn btn-primary float-right"
@@ -36,7 +38,6 @@ const OrderEditorContainer = ({items, dishes, restaurantId, total,
           </button>
         </div>
       </div>
-    </div>
   );
 };
 

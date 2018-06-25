@@ -182,19 +182,21 @@ export default class RestaurantViewer extends React.Component {
 
           <div className="col-8">
             <div className="row">
-              <h1>{this.state.restaurant.name}
+              <h3>{this.state.restaurant.name}
                 {(this.state.restaurant.id !== 0 && !this.state.isLiked)
                 && <i className="fa fa-heart-o col-2 text-right"
                       onClick={() => this.like(this.state.restaurant.id)}/>}
                 {(this.state.restaurant.id !== 0 && this.state.isLiked)
                 && <i className="fa fa-heart col-2 text-right"
                       onClick={() => this.unlike(this.state.restaurant.id)}/>}
-              </h1>
+              </h3>
             </div>
-            <h3>Address: {this.state.restaurant.address}</h3>
-            <h3>Phone: {this.state.restaurant.display_phone}</h3>
-            <h3>{this.state.restaurant.category} Rating:{this.state.restaurant.rating}</h3>
-          </div>
+            <div>
+            <h4>Address: {this.state.restaurant.address}</h4>
+            <h4>Phone: {this.state.restaurant.display_phone}</h4>
+            <h4>Category: {this.state.restaurant.category} Rating:{this.state.restaurant.rating}</h4>
+            </div>
+            </div>
         </div>
 
         {(this.state.restaurant.id !== undefined && this.state.restaurant.id !== 0)

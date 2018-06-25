@@ -182,7 +182,7 @@ body {
 }
 
 .menu {
-    font-size: 150%
+    font-size: 115%
 }
 
 .fa-heart {
@@ -209,7 +209,7 @@ body {
     /*background-color: lightskyblue;*/
     /*box-shadow: inset 0 0 5px rgba(34, 126, 236, .8);*/
     border-radius: 12px;
-    /*padding: 5% 10%;*/
+    padding: 1% 5%;
     font-size: 120%;
 }
 

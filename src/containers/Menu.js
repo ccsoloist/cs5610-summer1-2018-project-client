@@ -22,9 +22,9 @@ const MenuComponent = ({dishes, restaurantId, items, total,
             <td className="text-center">{dish.name}</td>
             <td className="text-center">{dish.price}</td>
             <td className="text-center">
-              <button className="btn btn-primary float-right"
+              <button className="btn btn-primary"
                       onClick={() => addDishToOrder(dish, dishes, restaurantId, items, total)}>
-                Add to Cart
+                <i className="fa fa-cart-plus"/>
               </button>
             </td>
           </tr>
