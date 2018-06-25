@@ -158,7 +158,7 @@ const RegisterFormContainer = (
 };
 
 const stateToPropsMapper = (state, ownProps) => {
-  if (state != null) {
+  if (state != null && state.userType !== undefined) {
     return {
       userType: state.userType,
       claimed: state.claimed,
@@ -195,7 +195,7 @@ const RegisterForm = state => (
     <RegisterFormConnected
       restaurantId={-1}
       claimed={false}
-      userType={constants.RESTAURATEUR}/>
+      userType={constants.CUSTOMER}/>
   </Provider>
 );
 
